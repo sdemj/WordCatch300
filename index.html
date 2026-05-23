@@ -516,16 +516,14 @@ padding: 40px 60px;
       box-shadow: 0 3.5px 0 #e08588;
     }
 
-    #grid {
-      display: inline-grid;
-      gap: 7.5px; 
-      background-color: #e1f5fe;
-      padding: 15px;
-      border-radius: 25px;
-      border: 6px solid #81d4fa;
-      box-shadow: 0 12.5px 0 #4fc3f7;
-    }
-
+#grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr) !important; /* 고정 px 대신 1fr 사용 */
+  gap: 2px !important; /* 간격 축소 */
+  width: 90vw !important; /* 화면 가로폭의 90%로 제한 */
+  max-width: 400px; /* PC에서는 너무 커지지 않게 제한 */
+  margin: 0 auto;
+}
     .cell {
       width: 56px; 
       height: 56px; 
