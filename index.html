@@ -554,6 +554,9 @@ body {
   justify-content: center;
   transform-origin: center center; 
 position: fixed;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
 }
     
 .word-container {
@@ -1101,9 +1104,19 @@ function resizeGame() {
   const designW = 1200;
   const designH = 800;
   
-const scale = Math.min((winW / designW) * 0.9, (winH / designH) * 0.9);
+  // 여백(padding)을 포함하여 90% 크기로 스케일 조정
+  const scaleX = winW / designW;
+  const scaleY = winH / designH;
+  const scale = Math.min(scaleX, scaleY) * 0.9;
   
   wrapper.style.transform = `scale(${scale})`;
+  
+  // 추가: 중앙 정렬을 강제하기 위한 설정
+  wrapper.style.left = "50%";
+  wrapper.style.top = "50%";
+  wrapper.style.transformOrigin = "center center";
+  // transform 속성 조합
+  wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
 }
 
 window.addEventListener("resize", resizeGame);
