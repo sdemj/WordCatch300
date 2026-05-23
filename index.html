@@ -1110,7 +1110,7 @@ function resizeGame() {
   let scale;
   if (isPortrait) {
     // 세로 모드: 가로 폭에 맞춰 화면을 꽉 차게 (여백 최소화)
-    scale = (winW / designW) * 0.95;
+    scale = (winW / designW);
   } else {
     // 가로 모드: 기존처럼 전체가 다 보이도록 스케일 조정
     scale = Math.min(winW / designW, winH / designH) * 0.9;
