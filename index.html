@@ -560,7 +560,9 @@ body {
   justify-content: center;
   transform-origin: center center; 
   flex-shrink: 0;                
-  position: relative;
+position: absolute; 
+  top: 0; left: 0; right: 0; bottom: 0;
+  margin: auto;
 }
     
 .word-container {
@@ -1108,18 +1110,13 @@ function resizeGame() {
   const designW = 1200;
   const designH = 800;
   
-  // 브라우저 가로/세로 비율 계산
-  const scale = Math.min(winW / designW, winH / designH);
-  
-  // 스케일 적용 (1보다 커지지 않게 제한하면 더 깔끔합니다)
-  const finalScale = Math.min(scale, 1);
+  const scale = Math.min(winW / designW, winH / designH)* 0.95;
   
   wrapper.style.transform = `scale(${finalScale})`;
 }
 
-// 이벤트 리스너 (DOMContentLoaded 사용을 권장)
 window.addEventListener("resize", resizeGame);
-window.addEventListener("DOMContentLoaded", resizeGame);
+window.addEventListener("load", resizeGame);
 
     function openHelp() {
       isHelpOpen = true;
