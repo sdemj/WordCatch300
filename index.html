@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Word Catch! Catch!</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 body {
   font-family: 'Nanum Gothic', sans-serif;
@@ -640,13 +640,10 @@ margin: 0;
 }
 
 #game-wrapper {
-  width: 100%;       /* 고정 1500px 삭제 */
-  height: auto;      /* 고정 900px 삭제 */
-  display: flex;
-  flex-direction: column; /* 세로로 쌓기 */
-  align-items: center;
-  justify-content: center;
-  transform: none !important; /* 스케일 강제 적용 해제 */
+    transform-origin: top left; /* 왼쪽 상단을 기준으로 축소 */
+    width: 100vw; /* 화면 너비에 맞춤 */
+    height: 100vh;
+    overflow: hidden;
 }
   </style>
 </head>
@@ -1128,11 +1125,25 @@ margin: 0;
     }
 
 function resizeGame() {
+    const game = document.querySelector('#game-wrapper'); // 게임 전체 컨테이너
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    // 게임의 기본 디자인 사이즈 (예: 1200x800)
+    const designWidth = 1200; 
+    const designHeight = 800;
+
+    // 비율 계산
+    const scale = Math.min(width / designWidth, height / designHeight);
+
+    // 스케일 적용
+    game.style.transform = `scale(${scale})`;
 }
 
-// 리사이즈 이벤트와 로드 시점 모두 적용
-window.addEventListener("resize", resizeGame);
-window.addEventListener("load", resizeGame);
+// 창 크기가 바뀔 때마다 실행
+window.addEventListener('resize', resizeGame);
+// 페이지 로드 시 실행
+window.onload = resizeGame;
 
     function openHelp() {
       isHelpOpen = true;
