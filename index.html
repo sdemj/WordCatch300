@@ -47,16 +47,9 @@ width: 95% !important;
   overflow: hidden;
 }
 
-@media (max-width: 600px) {
-  body {
-    padding: 10px; /* 모바일에서는 여백을 줄임 */
-  }
-  #intro-container {
-    padding: 20px; /* 내부 컨테이너 여백 축소 */
-    width: 98%;    /* 화면에 거의 꽉 차게 */
-  }
-  h1 {
-    font-size: 1.5rem; /* 제목 크기 조정 */
+@media (max-width: 900px) {
+  .main-game-container {
+    flex-direction: column; /* 태블릿/모바일에서는 세로 */
   }
 }
 
@@ -293,16 +286,14 @@ margin: 0 auto;
     }
 
     .main-game-container {
-      display: none; 
-      justify-content: center;
-      align-items: flex-start;
-      gap: 50px; 
-      margin-top: 25px;
-width: 95% !important;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  display: flex;
+  flex-direction: row; /* PC에서는 가로 */
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap; /* 화면이 좁아지면 자동으로 줄바꿈 */
+  width: 100%;
+}
 
 .left-panel {
   display: flex;
@@ -518,12 +509,12 @@ padding: 40px 60px;
 
 #grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr) !important; /* 고정 px 대신 1fr 사용 */
-  gap: 2px !important; /* 간격 축소 */
-  width: 90vw !important; /* 화면 가로폭의 90%로 제한 */
-  max-width: 400px; /* PC에서는 너무 커지지 않게 제한 */
-  margin: 0 auto;
+  grid-template-columns: repeat(10, 1fr); /* 10열을 균등 분할 */
+  width: 80vw; /* PC든 태블릿이든 화면 폭의 80% 차지 */
+  max-width: 500px; /* 너무 커지지 않게 제한 */
+  aspect-ratio: 1 / 1; /* 정사각형 비율 유지 */
 }
+
     .cell {
       width: 56px; 
       height: 56px; 
@@ -746,6 +737,13 @@ margin: 0;
     let isHelpOpen = false; 
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function enterFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  }
+}
 
     function playSound(type) {
       if (audioCtx.state === 'suspended') {
