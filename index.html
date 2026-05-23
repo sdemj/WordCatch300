@@ -3,24 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <title>Word Catch! Catch!</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 body {
   font-family: 'Nanum Gothic', sans-serif;
   text-align: center;
-  padding: 10px; 
+  padding: 25px; 
   margin: 0;
   background-color: #f0faff;
   color: #333;
   overflow-x: hidden;
 }
 
-.intro-container {
-    width: 100%; /* 고정 비율 대신 100% 사용 */
-    max-width: 600px; /* 모바일에서 너무 커지지 않게 제한 */
-    margin: 10px auto; /* 여백 축소 */
-    padding: 20px; /* 내부 패딩 축소 */
-    box-sizing: border-box; /* 패딩이 너비에 포함되게 설정 */
+#intro-container {
+width: 95% !important;
+  max-width: 1200px;
+  margin: 40px auto;
+
+  background:
+    radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%),
+    radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%),
+    rgba(255,255,255,0.85);
+
+  backdrop-filter: blur(10px);
+
+  padding: 45px;
+
+  border-radius: 40px;
+
+  border: 6px solid #ffffff;
+
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.08),
+    0 5px 0 #cfe9ff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+
+  position: relative;
+  overflow: hidden;
 }
 
 @keyframes floatStar {
@@ -192,7 +216,7 @@ body {
 
 
     .header-container {
-width: 100% !important; 
+width: 95% !important; /* 모바일에서 화면 95% 사용 */
   max-width: 1200px;
       display: none; 
       align-items: center;
@@ -247,8 +271,8 @@ width: 100% !important;
 
     .timer-circle-box {
       position: relative;
-      width: 88px; 
-      height: 88px;
+      width: 80px; 
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -260,7 +284,7 @@ width: 100% !important;
       align-items: flex-start;
       gap: 50px; 
       margin-top: 25px;
-width: 100% !important;
+width: 95% !important;
       max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
@@ -344,8 +368,8 @@ width: 100% !important;
 .how-to-play-btn:hover { background: #0288d1; color: white; }
     
     .timer-circle-box svg {
-      width: 88px;
-      height: 88px;
+      width: 100%;
+      height: 100%;
       transform: rotate(-90deg);
     }
 
@@ -379,8 +403,6 @@ width: 100% !important;
 
     .word-box {
       width: 210px; 
-text-align: center;
-align-items: center;
       background-color: #ffffff;
       border: 5px dashed #ffab91;
       border-radius: 31px;
@@ -550,7 +572,6 @@ width: 100%;    /* 부모인 body에 맞춤 */
   display: flex;
   flex-direction: column;
   align-items: center;
-justify-content: center;
   gap: 10px; /* 박스와 버튼 사이 간격 */
 }
 
@@ -617,10 +638,13 @@ margin: 0;
 }
 
 #game-wrapper {
-    transform-origin: top left; /* 왼쪽 상단을 기준으로 축소 */
-    width: 100vw; /* 화면 너비에 맞춤 */
-    height: 100vh;
-    overflow: hidden;
+  width: 100%;       /* 고정 1500px 삭제 */
+  height: auto;      /* 고정 900px 삭제 */
+  display: flex;
+  flex-direction: column; /* 세로로 쌓기 */
+  align-items: center;
+  justify-content: center;
+  transform: none !important; /* 스케일 강제 적용 해제 */
 }
   </style>
 </head>
@@ -666,10 +690,9 @@ margin: 0;
 <div class="left-panel">
   <div class="btn-group">
     <button class="buzzer-btn hint-btn" onclick="useHint()">HINT</button> 
-    <div class="timer-circle-box">
-      <svg>
-        <circle class="circle-bg"></circle>
-        <circle id="timer-circle" class="circle-progress"></circle>
+<div class="timer-circle-box">
+  <svg viewBox="0 0 100 100"> <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
+    <circle id="timer-circle" class="circle-progress" cx="50" cy="50" r="40"></circle>
       </svg>
       <div id="timer-text">4:00</div>
     </div>
@@ -703,7 +726,7 @@ margin: 0;
     const INITIAL_TIME = 240; 
     let timeLeft = INITIAL_TIME;
     let timerInterval = null;
-    const CIRCUMFERENCE = 2 * Math.PI * 37.5; 
+    const CIRCUMFERENCE = 2 * Math.PI * 40; 
     let lastSecondInt = -1; 
     let isHelpOpen = false; 
 
@@ -1102,25 +1125,11 @@ margin: 0;
     }
 
 function resizeGame() {
-    const game = document.querySelector('#game-wrapper'); // 게임 전체 컨테이너
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    
-    // 게임의 기본 디자인 사이즈 (예: 1200x800)
-    const designWidth = 1200; 
-    const designHeight = 800;
-
-    // 비율 계산
-    const scale = Math.min(width / designWidth, height / designHeight);
-
-    // 스케일 적용
-    game.style.transform = `scale(${scale})`;
 }
 
-// 창 크기가 바뀔 때마다 실행
-window.addEventListener('resize', resizeGame);
-// 페이지 로드 시 실행
-window.onload = resizeGame;
+// 리사이즈 이벤트와 로드 시점 모두 적용
+window.addEventListener("resize", resizeGame);
+window.addEventListener("load", resizeGame);
 
     function openHelp() {
       isHelpOpen = true;
