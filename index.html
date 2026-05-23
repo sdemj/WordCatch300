@@ -561,13 +561,14 @@ body {
 
 /* 실제 게임 화면을 담는 래퍼 */
 #game-wrapper {
-width: 100%;    /* 부모인 body에 맞춤 */
-  height: auto;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column; /* 세로로 배치 */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transform: none;
+  transform-origin: center center; 
+  transition: transform 0.1s;
 }
 
 .word-container {
