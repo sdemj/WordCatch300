@@ -1131,9 +1131,23 @@ margin: 0;
     }
 
 function resizeGame() {
+  const wrapper = document.getElementById("game-wrapper");
+  const winW = window.innerWidth;
+  const winH = window.innerHeight;
+  
+  // 게임의 기본 디자인 기준 크기 (가로 1200, 세로 800 기준)
+  const designW = 1200;
+  const designH = 800;
+  
+  // 화면 비율에 맞춰 스케일 계산
+  const scaleW = winW / designW;
+  const scaleH = winH / designH;
+  const scale = Math.min(scaleW, scaleH, 1); // 1보다 커지지 않게 제한
+  
+  wrapper.style.transform = `scale(${scale})`;
 }
 
-// 리사이즈 이벤트와 로드 시점 모두 적용
+// 기존 리스너 유지
 window.addEventListener("resize", resizeGame);
 window.addEventListener("load", resizeGame);
 
