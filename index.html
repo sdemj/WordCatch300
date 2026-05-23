@@ -1135,16 +1135,16 @@ function resizeGame() {
   const winW = window.innerWidth;
   const winH = window.innerHeight;
   
-  // 게임의 기본 디자인 기준 크기 (가로 1200, 세로 800 기준)
   const designW = 1200;
   const designH = 800;
   
-  // 화면 비율에 맞춰 스케일 계산
-  const scaleW = winW / designW;
-  const scaleH = winH / designH;
-  const scale = Math.min(scaleW, scaleH, 1); // 1보다 커지지 않게 제한
+  const scale = Math.min(winW / designW, winH / designH);
   
+  // 요소에 직접 스타일 적용
   wrapper.style.transform = `scale(${scale})`;
+  
+  // 디버깅용: 콘솔에서 확인 가능 (F12 누르고 콘솔 확인)
+  console.log("Current Scale:", scale);
 }
 
 // 기존 리스너 유지
