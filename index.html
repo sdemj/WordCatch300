@@ -1104,22 +1104,23 @@ function resizeGame() {
   const designW = 1200;
   const designH = 800;
   
-  // 여백(padding)을 포함하여 90% 크기로 스케일 조정
-  const scaleX = winW / designW;
-  const scaleY = winH / designH;
-  const scale = Math.min(scaleX, scaleY) * 0.9;
+  // 가로/세로 비율 확인
+  const isPortrait = winH > winW;
   
-  wrapper.style.transform = `scale(${scale})`;
+  let scale;
+  if (isPortrait) {
+    // 세로 모드: 가로 폭에 맞춰 화면을 꽉 차게 (여백 최소화)
+    scale = (winW / designW) * 0.95;
+  } else {
+    // 가로 모드: 기존처럼 전체가 다 보이도록 스케일 조정
+    scale = Math.min(winW / designW, winH / designH) * 0.9;
+  }
   
-  // 추가: 중앙 정렬을 강제하기 위한 설정
-  wrapper.style.left = "50%";
-  wrapper.style.top = "50%";
-  wrapper.style.transformOrigin = "center center";
-  // transform 속성 조합
   wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
 }
 
 window.addEventListener("resize", resizeGame);
+window.addEventListener("orientationchange", resizeGame);
 window.addEventListener("load", resizeGame);
 
     function openHelp() {
