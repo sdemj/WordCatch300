@@ -5,18 +5,6 @@
   <title>Word Catch! Catch!</title>
   <style>
 
-body {
-margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* 스크롤 없이 한 화면에 고정 */
-  background-color: #f0faff;
-}
-
 #intro-container {
 width: 95% !important;
   max-width: 1200px;
@@ -551,28 +539,29 @@ padding: 40px 60px;
 
     #message { margin-top: 19px; height: 38px; font-size: 1.5rem; font-weight: bold; }
 
-/* 화면 전체를 감싸는 컨테이너 설정 */
 body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  overflow: hidden; /* 스크롤 방지 */
+  overflow: hidden;
+  background-color: #f0faff;
 }
-
-/* 실제 게임 화면을 담는 래퍼 */
+    
 #game-wrapper {
-width: 1200px; /* 고정 크기 필수 */
-  height: 800px; /* 고정 크기 필수 */
+  width: 1200px;
+  height: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform-origin: center center; 
+  transform-origin: center center;
   flex-shrink: 0;
 }
-
+    
 .word-container {
   display: flex;
   flex-direction: column;
@@ -632,26 +621,6 @@ justify-content: center;
       stroke: #d32f2f !important;
     }
 
-body {
-margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* 스크롤 방지 */
-}
-
-#game-wrapper {
-  width: 100%;       /* 고정 1500px 삭제 */
-  height: auto;      /* 고정 900px 삭제 */
-  display: flex;
-  flex-direction: column; /* 세로로 쌓기 */
-  align-items: center;
-  justify-content: center;
-  transform: none !important; /* 스케일 강제 적용 해제 */
-}
   </style>
 </head>
 <body>
