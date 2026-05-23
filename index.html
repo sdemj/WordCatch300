@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Word Catch! Catch!</title>
   <style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 body {
   font-family: 'Nanum Gothic', sans-serif;
@@ -17,8 +17,8 @@ body {
 }
 
 #intro-container {
-  width: 90%;
-  max-width: 820px;
+width: 95% !important;
+  max-width: 1200px;
   margin: 40px auto;
 
   background:
@@ -216,6 +216,8 @@ body {
 
 
     .header-container {
+width: 95% !important; /* 모바일에서 화면 95% 사용 */
+  max-width: 1200px;
       display: none; 
       align-items: center;
       justify-content: center;
@@ -282,7 +284,8 @@ body {
       align-items: flex-start;
       gap: 50px; 
       margin-top: 25px;
-      max-width: 1500px;
+width: 95% !important;
+      max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -635,12 +638,13 @@ margin: 0;
 }
 
 #game-wrapper {
-  width: 1500px;
-  height: 900px;
-transform-origin: center center;
-  position: relative;
-  /* flex 대신 block으로 설정하여 내부 요소 배치를 조절 */
-  display: block;
+  width: 100%;       /* 고정 1500px 삭제 */
+  height: auto;      /* 고정 900px 삭제 */
+  display: flex;
+  flex-direction: column; /* 세로로 쌓기 */
+  align-items: center;
+  justify-content: center;
+  transform: none !important; /* 스케일 강제 적용 해제 */
 }
   </style>
 </head>
@@ -1122,32 +1126,6 @@ transform-origin: center center;
     }
 
 function resizeGame() {
-  const wrapper = document.getElementById("game-wrapper");
-  if (!wrapper) return;
-
-  const winW = window.innerWidth;
-  const winH = window.innerHeight;
-  
-  // 1500x900 기준 비율 (약 1.666...)
-  const gameRatio = 1500 / 900;
-  // 현재 브라우저 창 비율
-  const winRatio = winW / winH;
-  
-  let scale;
-  
-  // 핵심: 창이 게임보다 더 넓을 때 -> 가로가 꽉 차도록
-  if (winRatio > gameRatio) {
-    scale = winH / 900; // 세로를 기준으로 스케일
-  } 
-  // 창이 게임보다 더 좁을 때 -> 세로가 꽉 차도록
-  else {
-    scale = winW / 1500; // 가로를 기준으로 스케일
-  }
-  
-  // 1.5배 이상 과하게 축소되는 것을 방지하려면 Math.max(scale, 0.6) 등을 추가할 수 있지만, 
-  // 요청하신 대로 가로 비율 유지를 위해 그냥 적용합니다.
-  
-  wrapper.style.transform = `scale(${scale})`;
 }
 
 // 리사이즈 이벤트와 로드 시점 모두 적용
