@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>Word Catch! Catch!</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
 
 body {
@@ -45,12 +44,6 @@ width: 95% !important;
 
   position: relative;
   overflow: hidden;
-}
-
-@media (max-width: 900px) {
-  .main-game-container {
-    flex-direction: column; /* 태블릿/모바일에서는 세로 */
-  }
 }
 
 @keyframes floatStar {
@@ -286,14 +279,16 @@ margin: 0 auto;
     }
 
     .main-game-container {
-  display: flex;
-  flex-direction: row; /* PC에서는 가로 */
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap; /* 화면이 좁아지면 자동으로 줄바꿈 */
-  width: 100%;
-}
+      display: none; 
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px; 
+      margin-top: 25px;
+width: 95% !important;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
 .left-panel {
   display: flex;
@@ -507,13 +502,15 @@ padding: 40px 60px;
       box-shadow: 0 3.5px 0 #e08588;
     }
 
-#grid {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr); /* 10열을 균등 분할 */
-  width: 80vw; /* PC든 태블릿이든 화면 폭의 80% 차지 */
-  max-width: 500px; /* 너무 커지지 않게 제한 */
-  aspect-ratio: 1 / 1; /* 정사각형 비율 유지 */
-}
+    #grid {
+      display: inline-grid;
+      gap: 7.5px; 
+      background-color: #e1f5fe;
+      padding: 15px;
+      border-radius: 25px;
+      border: 6px solid #81d4fa;
+      box-shadow: 0 12.5px 0 #4fc3f7;
+    }
 
     .cell {
       width: 56px; 
@@ -737,13 +734,6 @@ margin: 0;
     let isHelpOpen = false; 
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-function enterFullscreen() {
-  const elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  }
-}
 
     function playSound(type) {
       if (audioCtx.state === 'suspended') {
