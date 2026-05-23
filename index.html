@@ -8,8 +8,10 @@
 #intro-container {
 width: 95% !important;
   max-width: 1200px;
-  margin: 40px auto;
-
+max-height: 90vh;      /* 화면 높이의 90%를 넘지 않게 설정 */
+  overflow-y: auto;      /* 내용이 많으면 박스 내부에서 스크롤 */
+  margin: auto;          /* 정중앙 정렬 */
+  padding: 30px;         /* 패딩을 약간 줄임 */
   background:
     radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%),
     radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%),
@@ -559,10 +561,7 @@ body {
   align-items: center;
   justify-content: center;
   transform-origin: center center; 
-  flex-shrink: 0;                
-position: absolute; 
-  top: 0; left: 0; right: 0; bottom: 0;
-  margin: auto;
+position: fixed;
 }
     
 .word-container {
@@ -1110,9 +1109,9 @@ function resizeGame() {
   const designW = 1200;
   const designH = 800;
   
-  const scale = Math.min(winW / designW, winH / designH)* 0.95;
+const scale = Math.min(winW / designW, winH / designH);
   
-  wrapper.style.transform = `scale(${finalScale})`;
+  wrapper.style.transform = `scale(${scale})`;
 }
 
 window.addEventListener("resize", resizeGame);
