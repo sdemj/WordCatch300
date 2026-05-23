@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Word Catch! Catch!</title>
+  <style>
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+  text-align: center;
+  padding: 25px; 
+  margin: 0;
+  background-color: #f0faff;
+  color: #333;
+  overflow-x: hidden;
+}
+
+#intro-container {
+  max-width: 820px;
+  margin: 40px auto;
+
+  background:
+    radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%),
+    radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%),
+    rgba(255,255,255,0.85);
+
+  backdrop-filter: blur(10px);
+
+  padding: 45px;
+
+  border-radius: 40px;
+
+  border: 6px solid #ffffff;
+
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.08),
+    0 5px 0 #cfe9ff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes floatStar {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+    .intro-title {
+      padding: 25px 60px; 
+      background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 25%, #fbc2eb 50%, #a1c4fd 75%, #c2e9fb 100%);
+      background-size: 200% auto;
+      animation: gradientMove 3s linear infinite;
+      color: white;
+      font-size: 3.5rem; 
+      font-weight: 900;
+      border-radius: 75px; 
+      box-shadow: 0 10px 0 #e08588, 0 19px 31px rgba(0, 0, 0, 0.15);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+      letter-spacing: 1.25px;
+      border: 5px solid white;
+    }
+
+.intro-box {
+  width: 100%;
+  text-align: left;
+
+  background: linear-gradient(
+    180deg,
+    #fefeff 0%,
+    #eef8ff 100%
+  );
+
+  padding: 28px 30px;
+
+  border-radius: 28px;
+
+  box-sizing: border-box;
+
+  border: 4px solid #9ed8ff;
+
+  box-shadow:
+    0 8px 0 #b8e4ff,
+    0 15px 25px rgba(0,0,0,0.06);
+
+  position: relative;
+
+  transition: transform 0.2s ease;
+}
+
+.intro-box:hover {
+  transform: translateY(-4px);
+}
+
+.intro-box h3 {
+  margin: 0 0 18px 0;
+
+  font-size: 1.8rem;
+  font-weight: 900;
+
+  color: #1a8fe3;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border-bottom: 3px dashed #b5deff;
+
+  padding-bottom: 12px;
+}
+
+.intro-box p,
+.intro-box ul {
+  margin: 0;
+
+  font-size: 1.12rem;
+
+  line-height: 2;
+
+  color: #4a5568;
+}
+
+.intro-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.intro-box li {
+  position: relative;
+  padding-left: 34px;
+  margin-bottom: 10px;
+}
+
+.intro-box li::before {
+  content: "⭐";
+
+  position: absolute;
+  left: 0;
+  top: 1px;
+}
+
+.intro-box b {
+  color: #ff6b9d;
+}
+    .start-btn {
+      background: linear-gradient(to bottom, #4fc3f7, #0288d1);
+      color: white;
+      border: none;
+      /* 크기를 줄이기 위해 패딩과 글자 크기 조정 */
+      padding: 15px 40px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #01579b, 0 10px 15px rgba(0,0,0,0.2);
+      transition: all 0.1s;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+.modal-content {
+  background: white;
+  border-radius: 25px;
+  border: 10px solid #ff9a9e;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* 여백 줄이기 */
+  padding: 20px 40px; 
+  /* 내용물에 맞게 크기 조절 */
+  max-width: 90vw;
+  width: auto;
+  box-sizing: border-box;
+}
+
+.modal-content h3 { 
+  margin: 0 0 10px 0; /* 제목 아래 여백 축소 */
+  font-size: 2.5rem; 
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+    .start-btn:hover {
+      transform: translateY(2px);
+      box-shadow: 0 4px 0 #01579b, 0 8px 10px rgba(0,0,0,0.15);
+    }
+    .start-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #01579b, 0 4px 5px rgba(0,0,0,0.1);
+    }
+
+
+    .header-container {
+      display: none; 
+      align-items: center;
+      justify-content: center;
+      gap: 31px; 
+      margin: 19px auto 31px; 
+    }
+
+    .challenge-title {
+      padding: 19px 50px; 
+      background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 25%, #fbc2eb 50%, #a1c4fd 75%, #c2e9fb 100%);
+      background-size: 200% auto;
+      animation: gradientMove 3s linear infinite;
+      color: white;
+      font-size: 2.75rem; 
+      font-weight: 900;
+      border-radius: 75px; 
+      box-shadow: 0 10px 0 #e08588, 0 19px 31px rgba(0, 0, 0, 0.1);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+      letter-spacing: 1.25px;
+      border: 5px solid white;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #round-display {
+      background-color: #ffd54f;
+      color: #795548;
+      padding: 10px 22px; 
+      font-size: 1.1rem; 
+      font-weight: bold;
+      border-radius: 31px;
+      box-shadow: 0 4px 0 #ffb300;
+      white-space: nowrap;
+      border: 3px solid white;
+    }
+
+    #round-display .current-idx {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #d84315; 
+      margin-right: 2px;
+    }
+    #round-display .total-idx {
+      color: #9e7567;
+      font-size: 1rem;
+    }
+
+    .timer-circle-box {
+      position: relative;
+      width: 88px; 
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main-game-container {
+      display: none; 
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px; 
+      margin-top: 25px;
+      max-width: 1500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+    .buzzer-btn {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      border: none; 
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.08s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 3px rgba(255,255,255,0.3);
+    }
+    
+    .buzzer-btn::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 15%;
+      width: 70%;
+      height: 30%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
+      border-radius: 50% / 100% 100% 0% 0%;
+      pointer-events: none;
+    }
+
+    .buzzer-btn:hover {
+      transform: translateY(2px);
+      box-shadow: 
+        0 6px 0 #2b2b2b, 
+        0 8px 0 #151515,
+        0 12px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .buzzer-btn:active {
+      transform: translateY(6px);
+      box-shadow: 
+        0 2px 0 #2b2b2b, 
+        0 4px 0 #151515,
+        0 5px 5px rgba(0, 0, 0, 0.2);
+    }
+
+.hint-btn { 
+  background: radial-gradient(circle at center, #ffccd5 20%, #ffb3c1 100%); 
+  color: #fff; 
+  text-shadow: 0 -2px 2px rgba(0,0,0,0.2), 0 1px 1px rgba(255,255,255,0.4); 
+}
+
+.how-to-play-btn {
+  width: 210px;
+  padding: 12px;
+  background: #ffffff;
+  border: 3px solid #0288d1;
+  border-radius: 15px;
+  color: #0288d1;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.how-to-play-btn:hover { background: #0288d1; color: white; }
+    
+    .timer-circle-box svg {
+      width: 88px;
+      height: 88px;
+      transform: rotate(-90deg);
+    }
+
+    .timer-circle-box circle {
+      fill: white;
+      stroke-width: 10; 
+      cx: 44;
+      cy: 44;
+      r: 37.5; 
+    }
+
+    .circle-bg { stroke: #eee; }
+    .circle-progress {
+      stroke: #ef5350;
+      stroke-dasharray: 235.6; 
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.1s linear;
+      fill: none !important;
+    }
+
+    #timer-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+      font-size: 1.1rem; 
+      color: #333;
+    }
+
+    .word-box {
+      width: 210px; 
+      background-color: #ffffff;
+      border: 5px dashed #ffab91;
+      border-radius: 31px;
+      padding: 25px 15px; 
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05);
+      box-sizing: border-box;
+    }
+
+    .word-box h2 { 
+      margin: 0 0 19px 0; 
+      font-size: 1.3rem; 
+      color: #ff7043; 
+      white-space: nowrap; 
+    }
+    
+    .word-box .word-item {
+      display: block; 
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 25px;
+      font-size: 1.25rem; 
+      background-color: #fff9c4;
+      border: 4px solid #fff176;
+      font-weight: 900;
+      color: #555;
+    }
+
+    .word-box .word-found {
+      text-decoration: line-through;
+      color: #bbb;
+      border-color: #eee;
+      background-color: #fafafa;
+    }
+
+    #modal-overlay {
+      position: fixed;
+      top: 0; left: 0; 
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.5); 
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 25px;
+      border: 10px solid #ff9a9e;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+padding: 40px 60px; 
+  
+  width: auto;
+  max-width: 800px; /* 창이 너무 커지는 것을 방지하는 최대치 */
+  min-width: 300px; /* 창이 너무 작아지는 것을 방지하는 최소치 */
+  box-sizing: border-box;
+    }
+
+    .modal-content h3 { color: #ff7043; font-size: 2.8rem; margin: 0 0 15px; font-weight: 900; }
+    
+    .modal-help-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #444;
+      text-align: left;
+      word-break: keep-all;
+      margin-bottom: 25px;
+      background: #fff8f8;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px dashed #ffcbd1;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .next-btn {
+      background: linear-gradient(to bottom, #ff9a9e, #fecfef);
+      color: white;
+      border: none;
+      padding: 15px 45px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 7.5px 0 #e08588;
+      transition: all 0.2s;
+    }
+    .next-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 3.5px 0 #e08588;
+    }
+
+    #grid {
+      display: inline-grid;
+      gap: 7.5px; 
+      background-color: #e1f5fe;
+      padding: 15px;
+      border-radius: 25px;
+      border: 6px solid #81d4fa;
+      box-shadow: 0 12.5px 0 #4fc3f7;
+    }
+
+    .cell {
+      width: 56px; 
+      height: 56px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      user-select: none;
+      cursor: pointer;
+      background-color: #fff;
+      transition: transform 0.1s, background-color 0.2s;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,0.05);
+    }
+    .cell span { font-size: 1.6rem; font-weight: 800; color: #444; }
+    
+    .cell.temp { background-color: #80deea !important; transform: scale(1.1); color: white !important; z-index: 5; position: relative;}
+    
+    .cell.found { color: white; box-shadow: none; }
+    .cell.found-clr-0 { background-color: #aed581; } 
+    .cell.found-clr-1 { background-color: #ff8a65; } 
+    .cell.found-clr-2 { background-color: #4fc3f7; } 
+    .cell.found-clr-3 { background-color: #ce93d8; } 
+    .cell.found-clr-4 { background-color: #ffd54f; } 
+
+    @keyframes hintPulse {
+      0% { background-color: #ffffff; transform: scale(1); }
+      50% { background-color: #ffeb3b; transform: scale(1.08); box-shadow: 0 0 12px #ffeb3b; }
+      100% { background-color: #ffffff; transform: scale(1); }
+    }
+    .cell.hint-active {
+      animation: hintPulse 1s infinite ease-in-out;
+      z-index: 4;
+      position: relative;
+    }
+
+    #message { margin-top: 19px; height: 38px; font-size: 1.5rem; font-weight: bold; }
+
+/* 화면 전체를 감싸는 컨테이너 설정 */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden; /* 스크롤 방지 */
+}
+
+/* 실제 게임 화면을 담는 래퍼 */
+#game-wrapper {
+  width: 1500px; /* 원본 게임의 가로 크기 */
+  height: 900px; /* 원본 게임의 세로 크기 */
+transform-origin: center center;
+  position: relative; /* 자식 요소들의 절대 위치 기준점 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* 박스와 버튼 사이 간격 */
+}
+
+.how-to-play-btn {
+  width: 210px;
+  padding: 12px;
+  background: #ffffff;
+  border: 3px solid #0288d1;
+  border-radius: 15px;
+  color: #0288d1;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.how-to-play-btn:hover { background: #0288d1; color: white; }
+
+    .center-feedback {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      font-size: 4rem;
+      font-weight: 900;
+      z-index: 200;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-shadow: 3px 3px 0px #fff, -3px -3px 0px #fff, 3px -3px 0px #fff, -3px 3px 0px #fff, 0px 5px 10px rgba(0,0,0,0.2);
+    }
+    .center-feedback.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    @keyframes timerAlert {
+      0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0px #ef5350); }
+      20% { transform: scale(1.08) rotate(-3deg); filter: drop-shadow(0 0 8px #ef5350); }
+      40% { transform: scale(1.08) rotate(3deg); }
+      60% { transform: scale(1.08) rotate(-3deg); }
+      80% { transform: scale(1.08) rotate(3deg); }
+      100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0px #ef5350); }
+    }
+    
+    .timer-danger {
+      animation: timerAlert 0.4s infinite ease-in-out;
+    }
+    .timer-danger #timer-text {
+      color: #ef5350 !important;
+    }
+    .timer-danger .circle-progress {
+      stroke: #d32f2f !important;
+    }
+/* body에서 강제로 정렬하는 대신, 래퍼 자체를 절대 위치로 배치하여 확실하게 보이게 합니다 */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0faff;
+  overflow: hidden;
+}
+
+#game-wrapper {
+  width: 1500px;
+  height: 900px;
+transform-origin: center center;
+  position: relative;
+  /* flex 대신 block으로 설정하여 내부 요소 배치를 조절 */
+  display: block;
+}
+  </style>
+</head>
+<body>
+<div id="game-wrapper">
+  <div id="intro-container">
+    <div class="intro-title">Word Catch! Catch!</div>
+    
+    <div class="intro-box">
+      <h3> 학습 목표</h3>
+      <p>퍼즐 속에 숨겨진 영어 단어를 찾아보며 어휘력과 집중력을 재미있게 키워요!</p>
+    </div>
+
+    <div class="intro-box blue-box">
+      <h3> 활동 방법</h3>
+      <ul>
+        <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
+        <li><b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.</li>
+        <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 글자를 정답 순서대로 클릭합니다.</li>
+        <li>성공 시 <b>+20초</b> 추가, 오답 및 힌트 사용 시 <b>-10초</b>가 줄어듭니다.</li></li>
+      </ul>
+    </div>
+
+    <button class="start-btn" onclick="clickStart()">GAME START</button>
+  </div>
+
+<div class="header-container" id="game-header">
+  <div class="challenge-title">Word Catch! Catch!</div>
+  <div id="round-display">
+    ROUND <span class="current-idx">1</span><span class="total-idx">/ 5</span>
+  </div>
+</div>
+
+<div id="modal-overlay">
+  <div class="modal-content" id="modal-content">
+    <h3 id="modal-title">Round Clear!</h3>
+    <div id="modal-body" style="display: none;"></div>
+    <button class="next-btn" id="modal-button" onclick="goToNextRound()">Next Round!</button>
+  </div>
+</div>
+
+<div class="main-game-container" id="game-body">
+<div class="left-panel">
+  <div class="btn-group">
+    <button class="buzzer-btn hint-btn" onclick="useHint()">HINT</button> 
+    <div class="timer-circle-box">
+      <svg>
+        <circle class="circle-bg"></circle>
+        <circle id="timer-circle" class="circle-progress"></circle>
+      </svg>
+      <div id="timer-text">4:00</div>
+    </div>
+  </div>
+    
+    <div class="word-container">
+      <div class="word-box">
+        <h2> Word Box </h2>
+        <div id="word-list"></div>
+      </div>
+      <button class="how-to-play-btn" onclick="openHelp()">HOW TO PLAY</button>
+    </div>
+  </div>
+
+  <div class="grid-wrapper">
+    <div id="grid"></div>
+  </div>
+</div>
+
+  <div id="message"></div>
+  <div id="center-feedback" class="center-feedback"></div>
+
+  <script>
+    const ALL_WORDS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    let gridData = [], currentSelection = [], foundWords = new Set(), foundCells = new Map(); 
+    let round = 1, currentWords = [], wordColors = [], rows = 10, cols = 10;
+    
+    let wordStartPositions = new Map();
+
+    const INITIAL_TIME = 240; 
+    let timeLeft = INITIAL_TIME;
+    let timerInterval = null;
+    const CIRCUMFERENCE = 2 * Math.PI * 37.5; 
+    let lastSecondInt = -1; 
+    let isHelpOpen = false; 
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'correct') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+        osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.1); 
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.2);
+      } else if (type === 'hint') {
+        osc.type = 'sine';
+        const now = audioCtx.currentTime;
+        osc.frequency.setValueAtTime(659.25, now); 
+        osc.frequency.setValueAtTime(880.00, now + 0.08); 
+        osc.frequency.setValueAtTime(1046.50, now + 0.16); 
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } else if (type === 'tick') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.05);
+      }
+    }
+
+    function clickStart() {
+      document.getElementById("intro-container").style.display = "none";
+      document.getElementById("game-header").style.display = "flex";
+      document.getElementById("game-body").style.display = "flex";
+      resetRound(); 
+    }
+
+    function resetRound() {
+      closeModal();
+      foundWords.clear();
+      foundCells.clear();
+      wordStartPositions.clear(); 
+      currentSelection = [];
+      isHelpOpen = false;
+      
+      document.getElementById("round-display").innerHTML = `ROUND <span class="current-idx">${round}</span><span class="total-idx">/ 5</span>`;
+      
+      const wordCount = round + 2;
+      currentWords = pickRandomWords(wordCount);
+      wordColors = currentWords.map((_, i) => i % 5); 
+      
+      rows = 10;
+      cols = 10;
+      
+      let success = false;
+      while (!success) { success = generateGrid(); }
+      renderGrid();
+      renderWordBox();
+      
+      if (!timerInterval) startTimer();
+    }
+
+    function startTimer() {
+      if(timerInterval) clearInterval(timerInterval);
+      updateTimerUI();
+      timerInterval = setInterval(() => {
+        if (isHelpOpen) return; 
+
+        timeLeft -= 0.1;
+
+        const timerBox = document.querySelector(".timer-circle-box");
+        if (timeLeft < 10 && timeLeft > 0) {
+          timerBox.classList.add("timer-danger");
+          
+          let currentSecondInt = Math.floor(timeLeft);
+          if (currentSecondInt !== lastSecondInt) {
+            playSound('tick');
+            lastSecondInt = currentSecondInt;
+          }
+        } else {
+          timerBox.classList.remove("timer-danger");
+        }
+
+        if (timeLeft <= 0) {
+          timeLeft = 0;
+          timerBox.classList.remove("timer-danger");
+          clearInterval(timerInterval);
+          timerInterval = null;
+          updateTimerUI();
+          gameOver();
+        }
+        updateTimerUI();
+      }, 100);
+    }
+
+    function updateTimerUI() {
+      const circle = document.getElementById("timer-circle");
+      const text = document.getElementById("timer-text");
+      const offset = CIRCUMFERENCE - (Math.min(timeLeft, INITIAL_TIME) / INITIAL_TIME) * CIRCUMFERENCE;
+      circle.style.strokeDashoffset = Math.max(0, offset);
+
+      const minutes = Math.floor(Math.max(0, timeLeft) / 60);
+      const seconds = Math.floor(Math.max(0, timeLeft) % 60);
+      text.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    function showTimerFeedback(txt) {
+      const centerFb = document.getElementById("center-feedback");
+      centerFb.textContent = txt;
+      
+      if (txt.includes("+")) {
+        centerFb.style.color = "#2ecc71"; 
+      } else {
+        centerFb.style.color = "#ef5350"; 
+      }
+
+      centerFb.classList.add("show");
+      setTimeout(() => {
+        centerFb.classList.remove("show");
+      }, 800);
+    }
+
+    function showModal(title, isLastRound = false, type = "clear") {
+      const modalContent = document.getElementById("modal-content");
+      const modalButton = document.getElementById("modal-button");
+      const modalBody = document.getElementById("modal-body");
+      
+     modalContent.style.width = "auto";
+     modalContent.style.height = "auto";
+      
+      document.getElementById("modal-title").textContent = title;
+      
+      modalBody.style.display = "none";
+      modalBody.innerHTML = "";
+
+      if (type === "help") {
+        modalBody.className = "modal-help-text";
+        modalBody.innerHTML = `
+          <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
+          <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
+          
+          <b style="color: #2980b9;">활동 방법</b><br>
+          • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
+          • <b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.<br>
+          • <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 글자를 정답 순서대로 클릭합니다.<br>
+          • 성공 시 <b>+20초</b> 추가, 오답 및 힌트 사용 시 <b>-10초</b>가 줄어듭니다.<br><br>
+
+          <b style="color: #d35400;">최종 성공 조건</b><br>
+          • 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br>
+          • 총 <b>5라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
+        `;
+        modalBody.style.display = "block";
+        modalButton.textContent = "Close";
+        modalButton.onclick = function() {
+          isHelpOpen = false;
+          closeModal();
+        };
+      } else if (type === "gameover") {
+        modalButton.textContent = "Try Again!";
+        modalButton.onclick = function() {
+            round = 1;
+            timeLeft = INITIAL_TIME;
+            resetRound();
+        };
+      } else {
+        if (isLastRound) {
+          modalButton.textContent = "Play Again!";
+          modalButton.onclick = function() {
+              round = 1;
+              timeLeft = INITIAL_TIME;
+              resetRound();
+          };
+        } else {
+          modalButton.textContent = "Next Round!";
+          modalButton.onclick = goToNextRound;
+        }
+      }
+      
+      document.getElementById("modal-overlay").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modal-overlay").style.display = "none";
+    }
+
+    function goToNextRound() {
+      round++;
+      resetRound();
+    }
+
+    function gameOver() {
+      setTimeout(() => {
+        showModal("Time Over! ", false, "gameover");
+      }, 100);
+    }
+
+    function pickRandomWords(count) {
+      const safeCount = Math.min(count, ALL_WORDS.length);
+      const shuffled = [...ALL_WORDS].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, safeCount);
+    }
+
+    function generateGrid() {
+      gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
+      const directions = [[0, 1], [1, 0], [1, 1]]; 
+      wordStartPositions.clear(); 
+      
+      for (let word of currentWords) {
+        let placed = false, attempts = 0;
+        const targetWord = word.toLowerCase();
+        while (!placed && attempts < 500) { 
+          const [dr, dc] = directions[Math.floor(Math.random() * directions.length)];
+          const r = Math.floor(Math.random() * rows), c = Math.floor(Math.random() * cols);
+          if (canPlace(targetWord, r, c, dr, dc)) {
+            for (let i = 0; i < targetWord.length; i++) { gridData[r + dr * i][c + dc * i] = targetWord[i]; }
+            
+            wordStartPositions.set(word, { r, c });
+            placed = true;
+          }
+          attempts++;
+        }
+        if (!placed) return false; 
+      }
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (gridData[r][c] === null) gridData[r][c] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        }
+      }
+      return true;
+    }
+
+    function canPlace(word, r, c, dr, dc) {
+      for (let i = 0; i < word.length; i++) {
+        const rr = r + dr * i, cc = c + dc * i;
+        if (rr < 0 || rr >= rows || cc < 0 || cc >= cols) return false;
+        if (gridData[rr][cc] !== null && gridData[rr][cc] !== word[i]) return false;
+      }
+      return true;
+    }
+
+    function renderGrid() {
+      const gridEl = document.getElementById("grid");
+      gridEl.innerHTML = "";
+      gridEl.style.gridTemplateColumns = `repeat(${cols}, 56px)`;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const cell = document.createElement("div");
+          cell.className = "cell";
+          const span = document.createElement("span");
+          span.textContent = gridData[r][c];
+          cell.appendChild(span);
+          const key = `${r},${c}`;
+          if (foundCells.has(key)) {
+            const colorIndex = foundCells.get(key);
+            cell.classList.add("found", `found-clr-${colorIndex % 5}`);
+          }
+          if (currentSelection.some(p => p.r === r && p.c === c)) {
+            cell.classList.add("temp");
+          }
+          cell.addEventListener("click", () => handleCellClick(r, c));
+          gridEl.appendChild(cell);
+        }
+      }
+    }
+
+    function renderWordBox() {
+      const listEl = document.getElementById("word-list");
+      listEl.innerHTML = "";
+      currentWords.forEach(word => {
+        const item = document.createElement("span");
+        item.className = "word-item";
+        item.textContent = word;
+        if (foundWords.has(word)) item.classList.add("word-found");
+        listEl.appendChild(item);
+      });
+    }
+
+    function handleCellClick(r, c) {
+      if (isHelpOpen) return; 
+      const last = currentSelection[currentSelection.length - 1];
+      if (!last) { currentSelection.push({r, c}); renderGrid(); return; }
+      if (currentSelection.some(p => p.r === r && p.c === c)) { 
+        currentSelection = []; 
+        renderGrid(); 
+        return; 
+      }
+      const dr = r - last.r, dc = c - last.c;
+      const isAdjacent = Math.abs(dr) <= 1 && Math.abs(dc) <= 1 && (dr !== 0 || dc !== 0);
+      let isSameDirection = true;
+      if (currentSelection.length >= 2) {
+        const prevDr = last.r - currentSelection[currentSelection.length - 2].r;
+        const prevDc = last.c - currentSelection[currentSelection.length - 2].c;
+        if (dr !== prevDr || dc !== prevDc) isSameDirection = false;
+      }
+      if (isAdjacent && isSameDirection) { 
+        currentSelection.push({r, c}); 
+        checkWord(); 
+      } else { 
+        playSound('wrong');
+        timeLeft -= 10;
+        showTimerFeedback("-10초");
+        currentSelection = []; 
+      }
+      renderGrid();
+    }
+
+    function checkWord() {
+      const selectedStr = currentSelection.map(p => gridData[p.r][p.c]).join("");
+      const reversedStr = selectedStr.split("").reverse().join(""); 
+      const matchIndex = currentWords.findIndex(w => {
+        const lowerW = w.toLowerCase();
+        return lowerW === selectedStr || lowerW === reversedStr;
+      });
+      if (matchIndex !== -1) {
+        const matchWord = currentWords[matchIndex];
+        if (!foundWords.has(matchWord)) {
+          playSound('correct');
+          foundWords.add(matchWord);
+          timeLeft += 20;
+          showTimerFeedback("+20초");
+          const colorIndex = wordColors[matchIndex];
+          currentSelection.forEach(p => foundCells.set(`${p.r},${p.c}`, colorIndex));
+          renderWordBox();
+          currentSelection = []; 
+          if (foundWords.size === currentWords.length) {
+            if (round === 5) {
+                setTimeout(() => { 
+                    showModal("Mission Complete! 🏆", true, "clear"); 
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }, 500);
+            } else {
+                setTimeout(() => { showModal("Round " + round + " Clear!", false, "clear"); }, 500);
+            }
+          }
+        }
+      }
+    }
+
+    function getWordColorStr(index) { return ['#aed581', '#ff8a65', '#4fc3f7', '#ce93d8', '#ffd54f'][index % 5]; }
+    
+    function showMessage(txt, color = "#ff7043") {
+      const msgEl = document.getElementById("message");
+      msgEl.textContent = txt;
+      msgEl.style.color = color;
+      setTimeout(() => { if(msgEl.textContent === txt) msgEl.textContent = ""; }, 1500);
+    }
+
+    function useHint() {
+      if (isHelpOpen) return;
+      const remainingWords = currentWords.filter(w => !foundWords.has(w));
+      if (remainingWords.length === 0) return;
+
+      playSound('hint');
+      timeLeft -= 10;
+      showTimerFeedback("-10초");
+
+      const cells = document.querySelectorAll(".cell");
+      
+      remainingWords.forEach(word => {
+        const pos = wordStartPositions.get(word);
+        if (pos) {
+          const cellIndex = pos.r * cols + pos.c;
+          const cellEl = cells[cellIndex];
+          
+          if (cellEl && !cellEl.classList.contains("found")) {
+            cellEl.classList.add("hint-active");
+          }
+        }
+      });
+
+      setTimeout(() => {
+        cells.forEach(cell => cell.classList.remove("hint-active"));
+      }, 5000);
+    }
+
+function resizeGame() {
+  const wrapper = document.getElementById("game-wrapper");
+if (!wrapper) return;
+
+  const winW = window.innerWidth;
+  const winH = window.innerHeight;
+  
+  // 1500x900 비율 유지
+  const scale = Math.min(winW / 1500, winH / 900);
+  
+  // scale 적용 및 래퍼 정렬
+  wrapper.style.transform = `scale(${scale})`;
+}
+
+// 리사이즈 이벤트와 로드 시점 모두 적용
+window.addEventListener("resize", resizeGame);
+window.addEventListener("load", resizeGame);
+
+    function openHelp() {
+      isHelpOpen = true;
+      showModal("게임 방법 안내", false, "help");
+    }
+  </script>
+</body>
+</html>
