@@ -256,7 +256,8 @@ border-radius: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-margin: 0 auto;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .main-game-container {
@@ -344,40 +345,43 @@ width: 95% !important;
 }
 .how-to-play-btn:hover { background: #0288d1; color: white; }
     
-    .timer-circle-box svg {
+.timer-circle-box svg {
       width: 100%;
       height: 100%;
       transform: rotate(-90deg);
+      position: absolute; /* 글자와 레이어가 겹치도록 절대 위치 설정 */
+      top: 0;
+      left: 0;
     }
 
-    .timer-circle-box circle {
+.timer-circle-box circle {
       fill: white;
       stroke-width: 10; 
-      cx: 44;
-      cy: 44;
-      r: 37.5; 
+      cx: 50; /* [수정] SVG viewBox(100 100)의 정확한 중앙인 50으로 통일 */
+      cy: 50; /* [수정] SVG viewBox(100 100)의 정확한 중앙인 50으로 통일 */
+      r: 40;  /* 반지름을 viewBox 규격에 맞게 조정 */
     }
 
-    .circle-bg { stroke: #eee; }
+.circle-bg { stroke: #eee; }
     .circle-progress {
       stroke: #ef5350;
-      stroke-dasharray: 235.6; 
+      stroke-dasharray: 251.2; /* [수정] 반지름 40에 맞는 정확한 둘레 값(2 * PI * 40) 계산 반영 */
       stroke-dashoffset: 0;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.1s linear;
       fill: none !important;
     }
 
-    #timer-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-weight: bold;
-      font-size: 1.1rem; 
+#timer-text {
+      position: relative; /* flex 정렬을 따르도록 구조 변경 */
+      font-weight: 900;   /* 숫자가 더 잘 보이도록 두께 조정 */
+      font-size: 1.25rem; /* 시인성을 위해 크기 살짝 확대 */
       color: #333;
+      line-height: 1;     /* 세로 정렬 오차 방지 */
+      text-align: center;
+      user-select: none;
+      z-index: 2;         /* 원형 그래프보다 항상 위에 보이도록 설정 */
     }
-
     .word-box {
       width: 210px; 
 text-align: center;
