@@ -429,24 +429,34 @@ align-items: center;
       align-items: center;
       justify-content: center;
       z-index: 99999;
+      overflow: hidden;
     }
 
-    .modal-content {
-      background: white;
-      border-radius: 25px;
-      border: 10px solid #ff9a9e;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-padding: 40px 60px; 
+.modal-content {
+  width: 95% !important;   /* 인트로와 동일한 화면 대비 가로 비율 */
+  max-width: 1200px;       /* 인트로와 동일한 최대 너비 제한 */
+  height: auto;
+  min-height: auto;
+  margin: auto;     
+  padding: 30px;           /* 인트로와 동일한 내부 여백 */
   
-  width: auto;
-  max-width: 800px;
-  min-width: 300px;
+  /* 기존에 예쁘게 만드신 핑크/파랑 그라데이션 디자인 그대로 유지 */
+  background:
+    radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%),
+    radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%),
+    rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 40px;
+  border: 6px solid #ffffff;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08), 0 5px 0 #cfe9ff;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; 
+  position: relative;
   box-sizing: border-box;
-    }
+}
 
     .modal-content h3 { color: #ff7043; font-size: 2.8rem; margin: 0 0 15px; font-weight: 900; }
     
