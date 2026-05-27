@@ -1133,10 +1133,9 @@ window.addEventListener("resize", resizeGame);
 window.addEventListener("orientationchange", resizeGame);
 window.addEventListener("load", resizeGame);
 
-    function openHelp() {
-      isHelpOpen = true;
-      showModal("How to play", false, "help");
-    }
+function openHelp()
+  document.getElementById("game-wrapper").style.display = "none";
+  document.getElementById("modal-overlay").style.display = "flex";
   </script>
 </body>
 </html>
