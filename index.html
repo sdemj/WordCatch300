@@ -421,15 +421,14 @@ align-items: center;
     }
 
     #modal-overlay {
-      position: relative;
+      position: fixed;
       top: 0; left: 0; 
       width: 100vw; height: 100vh;
       background: #f0faff; 
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 100;
-      backdrop-filter: blur(10px);
+      z-index: 99999;
     }
 
     .modal-content {
