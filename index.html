@@ -426,16 +426,14 @@ align-items: center;
       left: 0; 
       width: 100vw; 
       height: 100vh;
-      background: rgba(0, 0, 0, 0.6); /* 시인성을 위해 배경을 조금 더 어둡게 조정 */
+      background: rgba(0, 0, 0, 0.65); /* 뒤쪽 게임 화면 암전 효과 강화 */
       display: none;
-      align-items: center;     /* 세로 정중앙 정렬 */
-      justify-content: center;   /* 가로 정중앙 정렬 */
-      z-index: 9999;           /* 게임 내의 어떤 요소보다 항상 최상위에 위치 */
+      align-items: center;     /* 화면 세로 정중앙 정렬 */
+      justify-content: center;   /* 화면 가로 정중앙 정렬 */
+      z-index: 99999;          /* game-wrapper를 포함한 화면 내 최상단 보장 */
       backdrop-filter: blur(8px);
-      padding: 20px;           /* 기기 테두리와의 최소 여백 확보 */
       box-sizing: border-box;
     }
-
 .modal-content {
       background: white;
       border-radius: 35px;
@@ -446,13 +444,10 @@ align-items: center;
       align-items: center;
       justify-content: center;
       padding: 30px 40px; 
-      
-      /* 화면 비율 붕괴 방지를 위한 반응형 핵심 크기 설정 */
-      width: 90%;
-      max-width: 550px;        /* PC/태블릿 환경에서 너무 비대해지는 것 방지 */
-      max-height: 85vh;        /* 화면 세로 크기를 초과하여 잘리는 현상 원천 차단 */
+      width: 85%;
+      max-width: 500px;  /* PC나 큰 태블릿에서 지나치게 커지는 현상 방지 */
+      max-height: 80vh;  /* 노트북 등 세로가 짧은 화면에서 팝업 위아래가 잘리는 현상 원천 차단 */
       box-sizing: border-box;
-      position: relative;
     }
 
 .modal-content h3 { 
@@ -663,7 +658,7 @@ justify-content: center;
     ROUND <span class="current-idx">1</span><span class="total-idx">/ 3</span>
   </div>
 </div>
-
+</div>
 <div id="modal-overlay">
   <div class="modal-content" id="modal-content">
     <h3 id="modal-title">Round Clear!</h3>
@@ -671,6 +666,9 @@ justify-content: center;
     <button class="next-btn" id="modal-button" onclick="goToNextRound()">Next Round!</button>
   </div>
 </div>
+
+  <div id="message"></div>
+  <div id="center-feedback" class="center-feedback"></div>
 
 <div class="main-game-container" id="game-body">
 <div class="left-panel">
@@ -698,8 +696,6 @@ justify-content: center;
   </div>
 </div>
 
-  <div id="message"></div>
-  <div id="center-feedback" class="center-feedback"></div>
 
   <script>
     const ALL_WORDS = ["good", "great", "morning", "afternoon", "evening", "ant", "so", "umbrella"];
