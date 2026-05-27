@@ -424,15 +424,15 @@ align-items: center;
   position: fixed;
   top: 0; left: 0; 
   width: 100vw; height: 100vh;
+  
+
   background-color: #f0faff; 
+  
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 99999;
-  box-sizing: border-box;
-  padding: 20px;
-  overflow: hidden;
-  z-index: 99999; /* 다른 어떤 요소보다 가장 위에 보이도록 설정 */
+  
+  z-index: 99999; 
   box-sizing: border-box;
 }
 
@@ -902,10 +902,9 @@ function showModal(title, isLastRound = false, type = "clear") {
       • 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br>
       • 총 <b>5라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
     `;
-    modalBody.style.display = "block";
-    modalButton.textContent = "CLOSE";
-    modalButton.onclick = function() {
-      isHelpOpen = false;
+modalContent.style.width = "650px";      /* 팝업창이 너무 거대해지지 않게 너비 고정 */
+  modalContent.style.maxWidth = "90vw";    /* 모바일 환경 배려 */
+  modalContent.style.maxHeight = "85vh";      isHelpOpen = false;
       closeModal();
     };
   } else if (type === "gameover") {
