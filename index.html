@@ -910,12 +910,9 @@ document.getElementById("game-wrapper").style.display = "none";
     }
 
 function closeModal() {
-  // 1. 팝업창 배경(오버레이)을 숨깁니다.
-  document.getElementById("modal-overlay").style.display = "none";
-  
-  // 2. 도움말이든 클리어 창이든, 닫으면 무조건 게임 화면(#game-wrapper)을 다시 보여줍니다.
-  document.getElementById("game-wrapper").style.display = "flex";
-}
+      document.getElementById("modal-overlay").style.display = "none";
+      document.getElementById("game-wrapper").style.display = "flex";
+    }
 
     function goToNextRound() {
       round++;
@@ -1133,9 +1130,10 @@ window.addEventListener("resize", resizeGame);
 window.addEventListener("orientationchange", resizeGame);
 window.addEventListener("load", resizeGame);
 
-function openHelp()
-  document.getElementById("game-wrapper").style.display = "none";
-  document.getElementById("modal-overlay").style.display = "flex";
+    function openHelp() {
+      isHelpOpen = true;
+      showModal("How to play", false, "help");
+    }
   </script>
 </body>
 </html>
