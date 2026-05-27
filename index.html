@@ -420,27 +420,18 @@ align-items: center;
       background-color: #fafafa;
     }
 
-/* 1. 모달 배경 (브라우저 전체 화면을 완전히 덮도록 수정) */
 #modal-overlay {
-  /* position을 absolute에서 fixed로 변경하여 게임 창(wrapper)의 크기 제한을 깨부숩니다 */
-  position: fixed; 
-  
-  /* 뷰포트(화면) 기준 상하좌우를 0으로 맞추어 한 치의 틈도 없이 채웁니다 */
+  position: absolute;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  
-  /* 인트로 특유의 은은한 그라데이션과 투명도 조절 (살짝 더 불투명하게 조정하여 완벽 차단) */
-  background:
-    radial-gradient(circle at top left, #ffe0f3 0%, transparent 40%),
-    radial-gradient(circle at top right, #d6f0ff 0%, transparent 40%),
-    rgba(245, 252, 255, 0.98); /* 0.95에서 0.98로 올려서 뒤의 비침을 완전히 막아줍니다 */
+  width: 100%; height: 100%;
+
+background-color: #f0faff
     
-  backdrop-filter: blur(15px); /* 블러 강도를 살짝 높여 뒤 배경 요소를 더 고급스럽게 뭉갭니다 */
+  backdrop-filter: blur(10px);
   display: none;
-  
-  /* 화면 최상단 레이어로 띄우기 위해 숫자를 대폭 높입니다 */
-  z-index: 99999; 
+  z-index: 99;
 }
+
 .modal-content {
   /* 1. 화면 정중앙 배치를 위한 절대 위치 설정 */
   position: absolute;
@@ -870,6 +861,8 @@ let wordPool = [];
       modalBody.style.display = "none";
       modalBody.innerHTML = "";
 
+document.getElementById("game-wrapper").style.display = "none";
+
       if (type === "help") {
         modalBody.className = "modal-help-text";
         modalBody.innerHTML = `
@@ -916,8 +909,9 @@ let wordPool = [];
       document.getElementById("modal-overlay").style.display = "flex";
     }
 
-    function closeModal() {
+function closeModal() {
       document.getElementById("modal-overlay").style.display = "none";
+      document.getElementById("game-wrapper").style.display = "flex";
     }
 
     function goToNextRound() {
