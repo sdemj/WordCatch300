@@ -420,42 +420,44 @@ align-items: center;
       background-color: #fafafa;
     }
 
-    #modal-overlay {
-      position: fixed;
-      top: 0; left: 0; 
-      width: 100vw; height: 100vh;
-      background: #f0faff; 
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      overflow: hidden;
-    }
+#modal-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  
+  /* 인트로 특유의 은은한 핑크/블루 그라데이션 배경 구현 */
+  background:
+    radial-gradient(circle at top left, #ffe0f3 0%, transparent 40%),
+    radial-gradient(circle at top right, #d6f0ff 0%, transparent 40%),
+    rgba(240, 250, 255, 0.95); /* 미세하게 투명한 화이트아웃 */
+    
+  backdrop-filter: blur(10px);
+  display: none;
+  z-index: 99;
+}
 
 .modal-content {
-  width: 95% !important;   /* 인트로와 동일한 화면 대비 가로 비율 */
-  max-width: 1200px;       /* 인트로와 동일한 최대 너비 제한 */
-  height: auto;
-  min-height: auto;
-  margin: auto;     
-  padding: 30px;           /* 인트로와 동일한 내부 여백 */
+  /* 1. 화면 정중앙 배치를 위한 절대 위치 설정 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 정확히 자신의 절반만큼 끌어올려 정중앙 배치 */
   
-  /* 기존에 예쁘게 만드신 핑크/파랑 그라데이션 디자인 그대로 유지 */
-  background:
-    radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%),
-    radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%),
-    rgba(255,255,255,0.85);
-  backdrop-filter: blur(10px);
+  /* 2. 크기 및 비율 유지 (wrapper가 축소되어도 비율 유지) */
+  width: 85%;       /* 부모 wrapper 너비의 80% 차지 */
+  max-width: 600px; /* 너무 커지는 것 방지 */
+  box-sizing: border-box;
+  padding: 40px 30px;
+ background-color: #ffffff;
   border-radius: 40px;
   border: 6px solid #ffffff;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08), 0 5px 0 #cfe9ff;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08), 0 5px 0 #cfe9ff; /* 인트로식 하단 블록 그림자 */
   
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; 
-  position: relative;
-  box-sizing: border-box;
+  justify-content: center;
+  gap: 25px;
 }
 
     .modal-content h3 { color: #ff7043; font-size: 2.8rem; margin: 0 0 15px; font-weight: 900; }
@@ -850,6 +852,13 @@ let wordPool = [];
       }, 800);
     }
 
+    function showModal(title, isLastRound = false, type = "clear") {
+      const modalContent = document.getElementById("modal-content");
+      const modalButton = document.getElementById("modal-button");
+      const modalBody = document.getElementById("modal-body");
+      
+     modalContent.style.width = "auto";
+     modalContent.style.height = "auto";
       
       document.getElementById("modal-title").textContent = title;
       
