@@ -149,26 +149,6 @@ border-radius: 40px;
       overflow: hidden;
     }
 
-.modal-content {
-  background: white;
-  border-radius: 25px;
-  border: 10px solid #ff9a9e;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 40px; 
-  max-width: 90vw;
-  width: auto;
-  box-sizing: border-box;
-}
-
-.modal-content h3 { 
-  margin: 0 0 10px 0; 
-  font-size: 2.5rem; 
-}
-
 @keyframes sparkle {
   0% {
     transform: scale(1);
@@ -249,6 +229,7 @@ border-radius: 40px;
       font-size: 1rem;
     }
 
+    /* [수정] 타이머 박스의 내부 정렬 및 구조 최적화 */
     .timer-circle-box {
       position: relative;
       width: 80px; 
@@ -285,6 +266,8 @@ width: 95% !important;
   justify-content: center;
   align-items: center;
 }
+    
+    /* [수정] 다른 버튼들과의 일관성을 위해 기본 하단 입체 그림자 스타일 적용 */
     .buzzer-btn {
       width: 65px;
       height: 65px;
@@ -298,7 +281,7 @@ width: 95% !important;
       display: flex;
       align-items: center;
       justify-content: center;
-     box-shadow: 0 6px 0 #d04f66, 0 10px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 0 #d04f66, 0 10px 15px rgba(0,0,0,0.2);
     }
     
 .buzzer-btn::before {
@@ -323,11 +306,12 @@ width: 95% !important;
       box-shadow: 0 0px 0 #d04f66, 0 4px 5px rgba(0, 0, 0, 0.1);
     }
 
+/* [수정] 힌트 버튼 흰색 테두리 추가 및 박스 사이징 조절 */
 .hint-btn { 
-      background: linear-gradient(to bottom, #ffccd5, #ff8a9e); /* 입체감 있는 그라데이션 */
+      background: linear-gradient(to bottom, #ffccd5, #ff8a9e); 
       color: #fff; 
       text-shadow: 1px 1px 2px rgba(0,0,0,0.2); 
-      border: 3px solid white; /* 일관성을 위한 흰색 테두리 추가 */
+      border: 3px solid white; 
       box-sizing: border-box;
     }
 
@@ -349,7 +333,7 @@ width: 95% !important;
       width: 100%;
       height: 100%;
       transform: rotate(-90deg);
-      position: absolute; /* 글자와 레이어가 겹치도록 절대 위치 설정 */
+      position: absolute; 
       top: 0;
       left: 0;
     }
@@ -357,30 +341,31 @@ width: 95% !important;
 .timer-circle-box circle {
       fill: white;
       stroke-width: 10; 
-      cx: 50; /* [수정] SVG viewBox(100 100)의 정확한 중앙인 50으로 통일 */
-      cy: 50; /* [수정] SVG viewBox(100 100)의 정확한 중앙인 50으로 통일 */
-      r: 40;  /* 반지름을 viewBox 규격에 맞게 조정 */
+      cx: 50; 
+      cy: 50; 
+      r: 40;  
     }
 
 .circle-bg { stroke: #eee; }
     .circle-progress {
       stroke: #ef5350;
-      stroke-dasharray: 251.2; /* [수정] 반지름 40에 맞는 정확한 둘레 값(2 * PI * 40) 계산 반영 */
+      stroke-dasharray: 251.2; 
       stroke-dashoffset: 0;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.1s linear;
       fill: none !important;
     }
 
+/* [수정] PC 및 모든 디바이스에서 글자가 정확히 정중앙에 위치하도록 Flex 레이아웃 활용 */
 #timer-text {
-      position: relative; /* flex 정렬을 따르도록 구조 변경 */
-      font-weight: 900;   /* 숫자가 더 잘 보이도록 두께 조정 */
-      font-size: 1.25rem; /* 시인성을 위해 크기 살짝 확대 */
+      position: relative; 
+      font-weight: 900;   
+      font-size: 1.25rem; 
       color: #333;
-      line-height: 1;     /* 세로 정렬 오차 방지 */
+      line-height: 1;     
       text-align: center;
       user-select: none;
-      z-index: 2;         /* 원형 그래프보다 항상 위에 보이도록 설정 */
+      z-index: 2;         
     }
     .word-box {
       width: 210px; 
@@ -420,21 +405,23 @@ align-items: center;
       background-color: #fafafa;
     }
 
-#modal-overlay {
+    /* [수정] game-wrapper의 scale 영향권 밖에서 모니터 화면 전체를 기준으로 배치하는 fixed 구조 */
+    #modal-overlay {
       position: fixed;
-      top: 0; 
-      left: 0; 
-      width: 100vw; 
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.65); /* 뒤쪽 게임 화면 암전 효과 강화 */
+      top: 0; left: 0; 
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.65); 
       display: none;
-      align-items: center;     /* 화면 세로 정중앙 정렬 */
-      justify-content: center;   /* 화면 가로 정중앙 정렬 */
-      z-index: 99999;          /* game-wrapper를 포함한 화면 내 최상단 보장 */
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
       backdrop-filter: blur(8px);
       box-sizing: border-box;
+      padding: 20px;
     }
-.modal-content {
+
+    /* [수정] 화면 크기와 비율에 맞춰 유연하게 변하는 안정적인 팝업 구조 적용 */
+    .modal-content {
       background: white;
       border-radius: 35px;
       border: 8px solid #ff9a9e;
@@ -444,22 +431,16 @@ align-items: center;
       align-items: center;
       justify-content: center;
       padding: 30px 40px; 
-      width: 85%;
-      max-width: 500px;  /* PC나 큰 태블릿에서 지나치게 커지는 현상 방지 */
-      max-height: 80vh;  /* 노트북 등 세로가 짧은 화면에서 팝업 위아래가 잘리는 현상 원천 차단 */
+      width: 90%;
+      max-width: 550px;
+      max-height: 85vh;
       box-sizing: border-box;
+      position: relative;
     }
 
-.modal-content h3 { 
-      color: #ff7043; 
-      font-size: 2.3rem; 
-      margin: 0 0 15px 0; 
-      font-weight: 900;
-      text-align: center;
-      word-break: keep-all;
-    }
+    .modal-content h3 { color: #ff7043; font-size: 2.3rem; margin: 0 0 15px; font-weight: 900; text-align: center; word-break: keep-all; }
     
-   
+    /* [수정] 팝업 높이가 줄어들 경우 안정적으로 스크롤을 유도하도록 최적화 */
     .modal-help-text {
       font-size: 1.05rem;
       line-height: 1.6;
@@ -471,11 +452,10 @@ align-items: center;
       padding: 20px;
       border-radius: 20px;
       border: 2px dashed #ffcbd1;
-      
-      width: 100%;             /* 부모 너비에 백프로 맞춤 */
+      width: 100%;
       box-sizing: border-box;
-      overflow-y: auto;        /* 내용물이 넘치면 세로 스크롤 활성화 */
-      flex: 1;                 /* 남은 세로 공간을 유연하게 차지 */
+      overflow-y: auto;
+      flex: 1;
     }
 
     .next-btn {
@@ -565,7 +545,7 @@ body {
 position: fixed;
   top: 50%;
   left: 50%;
-  transform-origin: center center;
+  transform: translate(-50%, -50%);
 }
     
 .word-container {
@@ -573,7 +553,7 @@ position: fixed;
   flex-direction: column;
   align-items: center;
 justify-content: center;
-  gap: 10px; /* 박스와 버튼 사이 간격 */
+  gap: 10px; 
 }
 
 .how-to-play-btn {
@@ -630,77 +610,78 @@ justify-content: center;
   </style>
 </head>
 <body>
-<div id="game-wrapper">
-  <div id="intro-container">
-    <div class="intro-title">Word Catch! Catch!</div>
-    
-    <div class="intro-box">
-      <h3> 학습 목표</h3>
-      <p>퍼즐 속에 숨겨진 영어 단어를 찾아보며 어휘력과 집중력을 재미있게 키워요!</p>
-    </div>
-
-    <div class="intro-box blue-box">
-      <h3> 활동 방법</h3>
-      <ul>
-        <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
-        <li><b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.</li>
-        <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 글자를 정답 순서대로 클릭합니다.</li>
-        <li>성공 시 <b>+20초</b> 추가, 오답 및 힌트 사용 시 <b>-10초</b>가 줄어듭니다.</li></li>
-      </ul>
-    </div>
-
-    <button class="start-btn" onclick="clickStart()">GAME START</button>
-  </div>
-
-<div class="header-container" id="game-header">
-  <div class="challenge-title">Word Catch! Catch!</div>
-  <div id="round-display">
-    ROUND <span class="current-idx">1</span><span class="total-idx">/ 3</span>
-  </div>
-</div>
-</div>
-<div id="modal-overlay">
-  <div class="modal-content" id="modal-content">
-    <h3 id="modal-title">Round Clear!</h3>
-    <div id="modal-body" style="display: none;"></div>
-    <button class="next-btn" id="modal-button" onclick="goToNextRound()">Next Round!</button>
-  </div>
-</div>
-
-  <div id="message"></div>
-  <div id="center-feedback" class="center-feedback"></div>
-
-<div class="main-game-container" id="game-body">
-<div class="left-panel">
-  <div class="btn-group">
-    <button class="buzzer-btn hint-btn" onclick="useHint()">HINT</button> 
-<div class="timer-circle-box">
-  <svg viewBox="0 0 100 100"> <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
-    <circle id="timer-circle" class="circle-progress" cx="50" cy="50" r="40"></circle>
-      </svg>
-      <div id="timer-text">4:00</div>
-    </div>
-  </div>
-    
-    <div class="word-container">
-      <div class="word-box">
-        <h2> Word Box </h2>
-        <div id="word-list"></div>
+  <div id="game-wrapper">
+    <div id="intro-container">
+      <div class="intro-title">Word Catch! Catch!</div>
+      
+      <div class="intro-box">
+        <h3> 학습 목표</h3>
+        <p>퍼즐 속에 숨겨진 영어 단어를 찾아보며 어휘력과 집중력을 재미있게 키워요!</p>
       </div>
-      <button class="how-to-play-btn" onclick="openHelp()">HOW TO PLAY</button>
+
+      <div class="intro-box blue-box">
+        <h3> 활동 방법</h3>
+        <ul>
+          <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
+          <li><b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.</li>
+          <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 글자를 정답 순서대로 클릭합니다.</li>
+          <li>성공 시 <b>+20초</b> 추가, 오답 및 힌트 사용 시 <b>-10초</b>가 줄어듭니다.</li>
+        </ul>
+      </div>
+
+      <button class="start-btn" onclick="clickStart()">GAME START</button>
+    </div>
+
+    <div class="header-container" id="game-header">
+      <div class="challenge-title">Word Catch! Catch!</div>
+      <div id="round-display">
+        ROUND <span class="current-idx">1</span><span class="total-idx">/ 3</span>
+      </div>
+    </div>
+
+    <div class="main-game-container" id="game-body">
+      <div class="left-panel">
+        <div class="btn-group">
+          <button class="buzzer-btn hint-btn" onclick="useHint()">HINT</button> 
+          <div class="timer-circle-box">
+            <svg viewBox="0 0 100 100"> 
+              <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
+              <circle id="timer-circle" class="circle-progress" cx="50" cy="50" r="40"></circle>
+            </svg>
+            <div id="timer-text">4:00</div>
+          </div>
+        </div>
+        
+        <div class="word-container">
+          <div class="word-box">
+            <h2> Word Box </h2>
+            <div id="word-list"></div>
+          </div>
+          <button class="how-to-play-btn" onclick="openHelp()">HOW TO PLAY</button>
+        </div>
+      </div>
+
+      <div class="grid-wrapper">
+        <div id="grid"></div>
+      </div>
+    </div>
+
+    <div id="message"></div>
+    <div id="center-feedback" class="center-feedback"></div>
+  </div>
+  <div id="modal-overlay">
+    <div class="modal-content" id="modal-content">
+      <h3 id="modal-title">Round Clear!</h3>
+      <div id="modal-body" style="display: none;"></div>
+      <button class="next-btn" id="modal-button" onclick="goToNextRound()">Next Round!</button>
     </div>
   </div>
-
-  <div class="grid-wrapper">
-    <div id="grid"></div>
-  </div>
-</div>
-
 
   <script>
     const ALL_WORDS = ["good", "great", "morning", "afternoon", "evening", "ant", "so", "umbrella"];
 
-let wordPool = [];
+    // [수정] 단어 균등 노출을 지원하는 주머니(Pool) 시스템 선언 변수
+    let wordPool = [];
 
     let gridData = [], currentSelection = [], foundWords = new Set(), foundCells = new Map(); 
     let round = 1, currentWords = [], wordColors = [], rows = 10, cols = 10;
@@ -777,8 +758,10 @@ let wordPool = [];
       currentSelection = [];
       isHelpOpen = false;
       
-     document.getElementById("round-display").innerHTML = `ROUND <span class="current-idx">${round}</span><span class="total-idx">/ 3</span>`;
+      // [수정] 총 라운드 UI 표시를 3으로 유지
+      document.getElementById("round-display").innerHTML = `ROUND <span class="current-idx">${round}</span><span class="total-idx">/ 3</span>`;
       
+      // [수정] 라운드 규칙 적용 (1R: 3단어, 2R: 5단어, 3R: 7단어 계산 수식)
       const wordCount = 1 + (round * 2); 
       currentWords = pickRandomWords(wordCount);
       wordColors = currentWords.map((_, i) => i % 5);
@@ -854,13 +837,11 @@ let wordPool = [];
       }, 800);
     }
 
+    /* [수정] 스케일 독립 반응형 웹 팝업 디자인 체계에 맞추어 레이아웃 초기화 로직 보완 및 테두리 스타일 다형성 부여 */
     function showModal(title, isLastRound = false, type = "clear") {
       const modalContent = document.getElementById("modal-content");
       const modalButton = document.getElementById("modal-button");
       const modalBody = document.getElementById("modal-body");
-      
-     modalContent.style.width = "auto";
-     modalContent.style.height = "auto";
       
       document.getElementById("modal-title").textContent = title;
       
@@ -868,10 +849,11 @@ let wordPool = [];
       modalBody.innerHTML = "";
 
       if (type === "help") {
+        modalContent.style.borderColor = "#4fc3f7"; // 도움말 모달 전용 하늘색 보더
         modalBody.className = "modal-help-text";
         modalBody.innerHTML = `
-          <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
-          <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
+          <b style="font-size: 1.2rem; color: #0288d1; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
+          <hr style="border: 0; height: 1px; background: #b3e5fc; margin-bottom: 12px;">
           
           <b style="color: #2980b9;">활동 방법</b><br>
           • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
@@ -881,22 +863,30 @@ let wordPool = [];
 
           <b style="color: #d35400;">최종 성공 조건</b><br>
           • 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br>
-          • 총 <b>5라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
+          • 총 <b>3라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
         `;
         modalBody.style.display = "block";
         modalButton.textContent = "Close";
+        modalButton.style.background = "linear-gradient(to bottom, #4fc3f7, #0288d1)";
+        modalButton.style.boxShadow = "0 7.5px 0 #01579b";
         modalButton.onclick = function() {
           isHelpOpen = false;
           closeModal();
         };
       } else if (type === "gameover") {
+        modalContent.style.borderColor = "#ef5350"; // 게임오버 모달 전용 빨간색 보더
         modalButton.textContent = "Try Again!";
+        modalButton.style.background = "linear-gradient(to bottom, #ff7043, #d32f2f)";
+        modalButton.style.boxShadow = "0 7.5px 0 #b71c1c";
         modalButton.onclick = function() {
             round = 1;
             timeLeft = INITIAL_TIME;
             resetRound();
         };
       } else {
+        modalContent.style.borderColor = "#ff9a9e"; // 기본 클리어 전용 핑크색 보더
+        modalButton.style.background = "linear-gradient(to bottom, #ff9a9e, #fecfef)";
+        modalButton.style.boxShadow = "0 7.5px 0 #e08588";
         if (isLastRound) {
           modalButton.textContent = "Play Again!";
           modalButton.onclick = function() {
@@ -924,14 +914,20 @@ let wordPool = [];
 
     function gameOver() {
       setTimeout(() => {
-        showModal("Time Over! ", false, "gameover");
+        showModal("Time Over! 😥", false, "gameover");
       }, 100);
     }
 
+    // [수정] 단어가 무작위 풀 주머니(Pool)에서 소진 시까지 순환되어 고루 배출되는 알고리즘 적용
     function pickRandomWords(count) {
-      const safeCount = Math.min(count, ALL_WORDS.length);
-      const shuffled = [...ALL_WORDS].sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, safeCount);
+      const selected = [];
+      for (let i = 0; i < count; i++) {
+        if (wordPool.length === 0) {
+          wordPool = [...ALL_WORDS].sort(() => 0.5 - Math.random());
+        }
+        selected.push(wordPool.pop());
+      }
+      return selected;
     }
 
     function generateGrid() {
@@ -1057,7 +1053,8 @@ let wordPool = [];
           renderWordBox();
           currentSelection = []; 
           if (foundWords.size === currentWords.length) {
-            if (round === 5) {
+            // [수정] 최종 라운드 클리어 기준점을 기존 5에서 3으로 하향 조정
+            if (round === 3) {
                 setTimeout(() => { 
                     showModal("Mission Complete! 🏆", true, "clear"); 
                     clearInterval(timerInterval);
@@ -1092,51 +1089,3 @@ let wordPool = [];
       const cells = document.querySelectorAll(".cell");
       
       remainingWords.forEach(word => {
-        const pos = wordStartPositions.get(word);
-        if (pos) {
-          const cellIndex = pos.r * cols + pos.c;
-          const cellEl = cells[cellIndex];
-          
-          if (cellEl && !cellEl.classList.contains("found")) {
-            cellEl.classList.add("hint-active");
-          }
-        }
-      });
-
-      setTimeout(() => {
-        cells.forEach(cell => cell.classList.remove("hint-active"));
-      }, 5000);
-    }
-
-function resizeGame() {
-  const wrapper = document.getElementById("game-wrapper");
-  const winW = window.innerWidth;
-  const winH = window.innerHeight;
-  
-  const designW = 1200;
-  const designH = 800;
-  
-  // 가로/세로 비율 확인
-  const isPortrait = winH > winW;
-  
-  let scale;
-  if (isPortrait) {
-    scale = (winW / designW);
-  } else {
-    scale = Math.min(winW / designW, winH / designH) * 0.9;
-  }
-  
-  wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
-}
-
-window.addEventListener("resize", resizeGame);
-window.addEventListener("orientationchange", resizeGame);
-window.addEventListener("load", resizeGame);
-
-    function openHelp() {
-      isHelpOpen = true;
-      showModal("How to play", false, "help");
-    }
-  </script>
-</body>
-</html>
