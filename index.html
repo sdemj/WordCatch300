@@ -5,14 +5,11 @@
   <title>Word Catch! Catch!</title>
   <style>
 .hanging-indent {
-  /* 1. 전체 문단을 오른쪽으로 일정 간격 밀어냅니다 (들여쓰기 공간 확보) */
-  padding-left: 25px; 
-  
-  /* 2. 첫 줄만 다시 왼쪽으로 땡겨서 원래 위치로 돌려놓습니다 */
-  text-indent: -25px; 
-  
-  /* 줄 간격이 좁으면 가독성이 떨어지므로 조절해줍니다 */
+  display: block;        /* 블록 요소로 정의 */
+  padding-left: 25px;    /* 전체 문단을 오른쪽으로 25px 밀기 */
+  text-indent: -25px;    /* 첫 줄만 다시 25px 왼쪽으로 당기기 */
   line-height: 1.6;
+  margin: 0;             /* 기본 문단 간격 제거 */
 }
 #intro-container {
 width: 95% !important;
