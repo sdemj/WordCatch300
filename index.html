@@ -633,16 +633,16 @@ justify-content: center;
    
     <div class="intro-box">
       <h3> 학습 목표</h3>
-      <p>퍼즐 속에 숨겨진 영어 단어를 찾아보며 어휘력과 집중력을 재미있게 키워요!</p>
+      <p>퍼즐 속에 숨겨진 영어 단어를 찾아보며 재미있게 어휘력과 집중력을 키워요!</p>
     </div>
 
     <div class="intro-box blue-box">
-      <h3> How to play </h3>
+      <h3> How to Play </h3>
       <ul>
         <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
         <li><b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.</li>
-        <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 글자를 정답 순서대로 클릭합니다.</li>
-        <li>성공 시 <b>+20초</b> 추가, 오답 및 힌트 사용 시 <b>-10초</b>가 줄어듭니다.</li></li>
+        <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.</li>
+        <li>성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.</li></li>
       </ul>
     </div>
 
@@ -681,7 +681,7 @@ justify-content: center;
         <h2> Word Box </h2>
         <div id="word-list"></div>
       </div>
-      <button class="how-to-play-btn" onclick="openHelp()">HOW TO PLAY</button>
+      <button class="how-to-play-btn" onclick="openHelp()">How to Play</button>
     </div>
   </div>
 
@@ -694,13 +694,15 @@ justify-content: center;
   <div id="center-feedback" class="center-feedback"></div>
 
   <script>
-    const ALL_WORDS = ["good", "great", "morning", "afternoon", "evening", "ant", "so", "umbrella"];
+    const ALL_WORDS = ["good", "great", "morning", "afternoon", "evening", "ant", "apple", "cat", "hat"];
 
 let wordPool = [];
 
     let gridData = [], currentSelection = [], foundWords = new Set(), foundCells = new Map();
     let round = 1, currentWords = [], wordColors = [], rows = 10, cols = 10;
    
+const MAX_ROUND = 3;
+
     let wordStartPositions = new Map();
 
     const INITIAL_TIME = 240;
@@ -773,7 +775,7 @@ let wordPool = [];
       currentSelection = [];
       isHelpOpen = false;
      
-     document.getElementById("round-display").innerHTML = `ROUND <span class="current-idx">${round}</span><span class="total-idx">/ 3</span>`;
+document.getElementById("round-display").innerHTML = `ROUND <span class="current-idx">${round}</span><span class="total-idx">/ ${MAX_ROUND}</span>`;
      
       const wordCount = 1 + (round * 2);
       currentWords = pickRandomWords(wordCount);
@@ -870,15 +872,15 @@ let wordPool = [];
       <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
       <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
       
-      <b style="color: #2980b9;"> How to play </b><br>
+      <b style="color: #2980b9;"> How to Play </b><br>
       • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
       • <b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.<br>
-      • <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 글자를 정답 순서대로 클릭합니다.<br>
-      • 성공 시 <b>+20초</b> 추가, 오답 및 힌트 사용 시 <b>-10초</b>가 줄어듭니다.<br><br>
+      • <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.<br>
+      • 성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.<br><br>
 
       <b style="color: #d35400;">최종 성공 조건</b><br>
-      • 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br>
-      • 총 <b>5라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
+    • 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br>
+    • 총 <b>${MAX_ROUND}라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
     `;
     modalBody.style.display = "block";
     modalButton.textContent = "Close";
@@ -917,9 +919,13 @@ document.getElementById("game-header").style.display = "flex";
     }
 
     function goToNextRound() {
-      round++;
-      resetRound();
+      if (round < MAX_ROUND) {
+        round++;
+        resetRound();
+    } else {
+        console.log("마지막 라운드입니다.");
     }
+}
 
     function gameOver() {
       setTimeout(() => {
@@ -934,7 +940,7 @@ document.getElementById("game-header").style.display = "flex";
     }
 
     function generateGrid() {
-      gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
+gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
       const directions = [[0, 1], [1, 0], [1, 1]];
       wordStartPositions.clear();
      
@@ -954,13 +960,16 @@ document.getElementById("game-header").style.display = "flex";
         }
         if (!placed) return false;
       }
-      for (let r = 0; r < rows; r++) {
+for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          if (gridData[r][c] === null) gridData[r][c] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+            if (gridData[r][c] === null) {
+                // 이미 배치된 단어 알파벳들과 겹치지 않게 무작위 채우기
+                gridData[r][c] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+            }
         }
-      }
-      return true;
     }
+    return true;
+}
 
     function canPlace(word, r, c, dr, dc) {
       for (let i = 0; i < word.length; i++) {
@@ -1037,38 +1046,45 @@ document.getElementById("game-header").style.display = "flex";
       renderGrid();
     }
 
-    function checkWord() {
-      const selectedStr = currentSelection.map(p => gridData[p.r][p.c]).join("");
-      const reversedStr = selectedStr.split("").reverse().join("");
-      const matchIndex = currentWords.findIndex(w => {
+function checkWord() {
+    // 1. 현재 선택된 셀들의 철자를 정방향으로만 조합
+    const selectedStr = currentSelection.map(p => gridData[p.r][p.c]).join("");
+    
+    // 2. 현재 선택된 철자와 일치하는 단어가 있는지 확인 (역순 로직 제거)
+    const matchIndex = currentWords.findIndex(w => {
         const lowerW = w.toLowerCase();
-        return lowerW === selectedStr || lowerW === reversedStr;
-      });
-      if (matchIndex !== -1) {
+        return lowerW === selectedStr; // 정방향 일치만 확인
+    });
+
+    if (matchIndex !== -1) {
         const matchWord = currentWords[matchIndex];
         if (!foundWords.has(matchWord)) {
-          playSound('correct');
-          foundWords.add(matchWord);
-          timeLeft += 20;
-          showTimerFeedback("+20초");
-          const colorIndex = wordColors[matchIndex];
-          currentSelection.forEach(p => foundCells.set(`${p.r},${p.c}`, colorIndex));
-          renderWordBox();
-          currentSelection = [];
-          if (foundWords.size === currentWords.length) {
-            if (round === 5) {
-                setTimeout(() => {
-                    showModal("Mission Complete! 🏆", true, "clear");
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                }, 500);
-            } else {
-                setTimeout(() => { showModal("Round " + round + " Clear!", false, "clear"); }, 500);
+            playSound('correct');
+            foundWords.add(matchWord);
+            timeLeft += 20;
+            showTimerFeedback("+20초");
+            
+            const colorIndex = wordColors[matchIndex];
+            currentSelection.forEach(p => foundCells.set(`${p.r},${p.c}`, colorIndex));
+            
+            renderWordBox();
+            currentSelection = [];
+            
+            // 라운드 종료 및 게임 클리어 체크 (기존 로직 유지)
+            if (foundWords.size === currentWords.length) {
+                if (round >= MAX_ROUND) { 
+                    setTimeout(() => {
+                        showModal("Mission Complete! 🏆", true, "clear");
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                    }, 500);
+                } else {
+                    setTimeout(() => { showModal("Round " + round + " Clear!", false, "clear"); }, 500);
+                }
             }
-          }
         }
-      }
     }
+}
 
     function getWordColorStr(index) { return ['#aed581', '#ff8a65', '#4fc3f7', '#ce93d8', '#ffd54f'][index % 5]; }
    
@@ -1079,34 +1095,40 @@ document.getElementById("game-header").style.display = "flex";
       setTimeout(() => { if(msgEl.textContent === txt) msgEl.textContent = ""; }, 1500);
     }
 
-    function useHint() {
-      if (isHelpOpen) return;
-      const remainingWords = currentWords.filter(w => !foundWords.has(w));
-      if (remainingWords.length === 0) return;
+function useHint() {
+    if (isHelpOpen) return;
+    
+    // 1. 아직 찾지 못한 단어들만 필터링
+    const remainingWords = currentWords.filter(w => !foundWords.has(w));
+    if (remainingWords.length === 0) return;
 
-      playSound('hint');
-      timeLeft -= 10;
-      showTimerFeedback("-10초");
+    playSound('hint');
+    timeLeft -= 10;
+    showTimerFeedback("-10초");
 
-      const cells = document.querySelectorAll(".cell");
-     
-      remainingWords.forEach(word => {
+    // 2. 모든 셀에서 기존 hint-active 클래스 제거
+    document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("hint-active"));
+
+    // 3. 남은 단어들을 모두 순회하며 시작 위치에 힌트 표시
+    remainingWords.forEach(word => {
         const pos = wordStartPositions.get(word);
         if (pos) {
-          const cellIndex = pos.r * cols + pos.c;
-          const cellEl = cells[cellIndex];
-         
-          if (cellEl && !cellEl.classList.contains("found")) {
-            cellEl.classList.add("hint-active");
-          }
+            const cellIndex = pos.r * cols + pos.c;
+            const cells = document.querySelectorAll(".cell");
+            const cellEl = cells[cellIndex];
+            
+            // 아직 발견되지 않은 단어의 시작점만 강조
+            if (cellEl && !cellEl.classList.contains("found")) {
+                cellEl.classList.add("hint-active");
+            }
         }
-      });
+    });
 
-      setTimeout(() => {
-        cells.forEach(cell => cell.classList.remove("hint-active"));
-      }, 5000);
-    }
-
+    // 4. 5초 후 자동 제거
+    setTimeout(() => {
+        document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("hint-active"));
+    }, 5000);
+}
 function resizeGame() {
   const wrapper = document.getElementById("game-wrapper");
   const winW = window.innerWidth;
@@ -1134,7 +1156,7 @@ window.addEventListener("load", resizeGame);
 
     function openHelp() {
       isHelpOpen = true;
-      showModal("How to play", false, "help");
+      showModal("How to Play", false, "help");
     }
   </script>
 </body>
