@@ -34,7 +34,7 @@ border-radius: 40px;
   gap: 20px;
  
   position: relative;
-box-sizing: border-box; /
+box-sizing: border-box; 
 }
 
 @keyframes floatStar {
@@ -897,7 +897,7 @@ document.getElementById("round-display").innerHTML = `ROUND <span class="current
       isHelpOpen = false;
       closeModal(); // 👈 여기서 closeModal을 부르면 화면이 다시 나타납니다.
     };
-  else if (type === "gameover") {
+ } else if (type === "gameover") {
     modalButton.textContent = "Try Again!";
     modalButton.onclick = function() {
         round = 1;
@@ -1127,10 +1127,10 @@ function useHint() {
             const cellEl = cells[cellIndex];
             
             // 아직 발견되지 않은 단어의 시작점만 강조
-            if (cellEl && !cellEl.classList.contains("found")) {
+if (cellEl && !cellEl.classList.contains("found")) {
                 cellEl.classList.add("hint-active");
             }
-        }
+        });
     });
 }
     // 4. 5초 후 자동 제거
