@@ -872,43 +872,32 @@ document.getElementById("round-display").innerHTML = `ROUND <span class="current
   modalBody.style.display = "none";
   modalBody.innerHTML = "";
 
-if (type === "help") {
-  // 1. 도움말이 열릴 때 타이머를 완전히 일시정지
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-  isHelpOpen = true; 
+  if (type === "help") {
+    modalBody.className = "modal-help-text";
+    modalBody.innerHTML = `
+      <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
+      <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
+      
+      <b style="color: #2980b9;"> How to Play </b><br>
+      • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
+      • <b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.<br>
+      <p class="hanging-indent">
+      • <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.<br></p>
+      • 성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.<br><br>
 
-  modalBody.className = "modal-help-text";
-  modalBody.innerHTML = `
-    <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
-    <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
-    
-    <b style="color: #2980b9;"> How to Play </b><br>
-    • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
-    • <b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.<br>
-    <p class="hanging-indent">
-    • <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.<br></p>
-    • 성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.<br><br>
-
-    <b style="color: #d35400;">최종 성공 조건</b><br>
-    <p class="hanging-indent">
+      <b style="color: #d35400;">최종 성공 조건</b><br>
+      <p class="hanging-indent">
     • 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br>
     </p>
     • 총 <b>${MAX_ROUND}라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
-  `;
-  modalBody.style.display = "block";
-  modalButton.textContent = "Close";
-  
-  // 2. Close 버튼을 눌렀을 때 타이머를 다시 재개하도록 설정
-  modalButton.onclick = function() {
-    isHelpOpen = false;
-    closeModal(); 
-    startTimer(); // 👈 멈췄던 타이머를 다시 시작합니다.
-  };
-
-  else if (type === "gameover") {
+    `;
+    modalBody.style.display = "block";
+    modalButton.textContent = "Close";
+    modalButton.onclick = function() {
+      isHelpOpen = false;
+      closeModal(); // 👈 여기서 closeModal을 부르면 화면이 다시 나타납니다.
+    };
+  } else if (type === "gameover") {
     modalButton.textContent = "Try Again!";
     modalButton.onclick = function() {
         round = 1;
