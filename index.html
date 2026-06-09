@@ -564,7 +564,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box; /* 내부 패딩 깨짐 방지 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1); /* 👈 CSS 초기값으로 중앙 배치를 명시 */
+  transform-origin: center center;           /* 👈 한 번만 깔끔하게 지정 */
+  box-sizing: border-box;
 }
    
 .word-container {
