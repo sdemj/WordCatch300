@@ -897,7 +897,7 @@ document.getElementById("round-display").innerHTML = `ROUND <span class="current
       isHelpOpen = false;
       closeModal(); // 👈 여기서 closeModal을 부르면 화면이 다시 나타납니다.
     };
-  } else if (type === "gameover") {
+  else if (type === "gameover") {
     modalButton.textContent = "Try Again!";
     modalButton.onclick = function() {
         round = 1;
