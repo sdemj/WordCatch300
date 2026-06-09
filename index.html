@@ -1108,18 +1108,17 @@ function checkWord() {
 function useHint() {
     if (isHelpOpen) return;
     
-    // 1. 아직 찾지 못한 단어들만 필터링
     const remainingWords = currentWords.filter(w => !foundWords.has(w));
     if (remainingWords.length === 0) return;
 
     playSound('hint');
     timeLeft -= 10;
     showTimerFeedback("-10초");
-
-    // 2. 모든 셀에서 기존 hint-active 클래스 제거
+    
+    // 1. 기존 힌트 효과 제거
     document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("hint-active"));
-
-    // 3. 남은 단어들을 모두 순회하며 시작 위치에 힌트 표시
+    
+    // 2. 남은 단어들을 모두 순회하며 시작 위치에 힌트 표시
     remainingWords.forEach(word => {
         const pos = wordStartPositions.get(word);
         if (pos) {
@@ -1128,13 +1127,13 @@ function useHint() {
             const cellEl = cells[cellIndex];
             
             // 아직 발견되지 않은 단어의 시작점만 강조
-if (cellEl && !cellEl.classList.contains("found")) {
+            if (cellEl && !cellEl.classList.contains("found")) {
                 cellEl.classList.add("hint-active");
             }
-        });
-    });
-}
-    // 4. 5초 후 자동 제거
+        } // 👈 기존에 빠져있던 if문 닫기 괄호 추가
+    }); // 👈 괄호가 꼬여있던 forEach 정상 정렬 및 닫기
+
+    // 3. 5초 후 자동 제거
     setTimeout(() => {
         document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("hint-active"));
     }, 5000);
