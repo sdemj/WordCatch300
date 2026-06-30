@@ -631,6 +631,156 @@ justify-content: center;
       stroke: #d32f2f !important;
     }
 
+    /* ==========================================================================
+       [추가] 카테고리 및 소분류 선택 단계 관련 신규 UI 스타일
+       ========================================================================== */
+    #category-container, #subcategory-container {
+      width: 95% !important;
+      max-width: 1200px;
+      height: auto;
+      margin: auto;    
+      padding: 40px;    
+      background: radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%), radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%), rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      border: 6px solid #ffffff;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.08), 0 5px 0 #cfe9ff;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      box-sizing: border-box; 
+    }
+
+    .selection-heading {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #1a8fe3;
+      margin: 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .grid-menu {
+      display: grid;
+      grid-template-columns: repeat(3, 150px);
+      gap: 25px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .menu-box-btn {
+      width: 150px;
+      height: 110px;
+      background: linear-gradient(180deg, #fefeff 0%, #eef8ff 100%);
+      border: 4px solid #9ed8ff;
+      border-radius: 20px;
+      box-shadow: 0 6px 0 #b8e4ff, 0 10px 15px rgba(0,0,0,0.05);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #4a5568;
+      transition: all 0.15s ease;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .menu-box-btn span {
+      font-size: 0.85rem;
+      color: #718096;
+      font-weight: normal;
+      margin-top: 4px;
+    }
+
+    .menu-box-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #b8e4ff, 0 12px 18px rgba(0,0,0,0.08);
+    }
+
+    /* 선택/활성화 토글 상태 */
+    .menu-box-btn.active {
+      background: linear-gradient(180deg, #fff3f5 0%, #ffcbd1 100%) !important;
+      border-color: #ff6b9d !important;
+      box-shadow: 0 4px 0 #e05285 !important;
+      color: #d81b60 !important;
+      transform: translateY(2px);
+    }
+    .menu-box-btn.active span {
+      color: #e91e63;
+    }
+
+    /* 비활성화 테마 (샘플 외 카테고리용 흐린 처리) */
+    .menu-box-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f7fafc;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 0 #cbd5e0;
+      color: #a0aec0;
+    }
+    .menu-box-btn.disabled span { color: #cbd5e0; }
+    .menu-box-btn.disabled:hover { transform: none; box-shadow: 0 4px 0 #cbd5e0; }
+
+    .status-counter {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #ff6b9d;
+      background: #fff0f3;
+      padding: 8px 24px;
+      border-radius: 30px;
+      border: 2px dashed #ffcbd1;
+    }
+
+/* 대분류 전체 버튼 전용 와이드 스타일 */
+.menu-box-btn.full-width {
+  width: 100%;
+  max-width: 500px;  /* 하단 소분류 3개 배치 너비와 균형을 맞춤 */
+  height: 80px;      /* 시안에 맞춘 슬림한 바 형태 */
+background: linear-gradient(180deg, #fefeff 0%, #eef8ff 100%);  border: 3px solid #b3e5fc;
+border: 4px solid #9ed8ff;
+  border-radius: 20px;
+color: #4a5568;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+box-shadow: 0 6px 0 #b8e4ff, 0 10px 15px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin: 0 auto 0px auto; /* 하단 소분류 버튼들과의 간격 확보 */
+box-sizing: border-box;
+  transition: all 0.1s;
+}
+
+.menu-box-btn.full-width:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #b8e4ff, 0 12px 18px rgba(0,0,0,0.08);
+}
+
+.menu-box-btn.full-width.active {
+  background: linear-gradient(180deg, #fff3f5 0%, #ffcbd1 100%) !important;
+  border-color: #ff6b9d !important;
+  box-shadow: 0 4px 0 #e05285 !important;
+  color: #d81b60 !important;
+  transform: translateY(2px);
+}
+
+.menu-box-btn.full-width span {
+  font-size: 0.95rem;
+  color: #718096;
+  font-weight: normal;
+}
+
+.menu-box-btn.full-width.active span {
+  color: #e91e63;
+}
+
   </style>
 </head>
 <body>
@@ -646,14 +796,38 @@ justify-content: center;
     <div class="intro-box blue-box">
       <h3> How to Play </h3>
       <ul>
+        <li><b>원하는 주제를 선택합니다.</b></li>
         <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
         <li><b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.</li>
         <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.</li>
-        <li>성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.</li></li>
+        <li>성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.</li>
       </ul>
     </div>
 
     <button class="start-btn" onclick="clickStart()">GAME START</button>
+  </div>
+
+  <div id="category-container">
+    <h2 class="selection-heading">원하는 주제를 선택하세요</h2>
+    <div class="grid-menu">
+      <button class="menu-box-btn disabled">숫자와 색깔<span>Number & Color</span></button>
+      <button class="menu-box-btn disabled">사람과 동물<span>People & Animal</span></button>
+      <button class="menu-box-btn disabled">취미와 직업<span>Hobby & Job</span></button>
+      <button class="menu-box-btn disabled">음식<span>Food</span></button>
+      <button class="menu-box-btn disabled">국가와 자연<span>Country & Nature</span></button>
+      <button class="menu-box-btn disabled">장소와 교통<span>Transportation</span></button>
+      <button class="menu-box-btn" onclick="selectCategory('Things')">물건<span>Things</span></button>
+      <button class="menu-box-btn disabled">동작<span>Action</span></button>
+      <button class="menu-box-btn disabled">특징과 감정<span>Conditions</span></button>
+    </div>
+  </div>
+
+<div id="subcategory-container">
+    <h2 class="selection-heading">소주제를 선택하세요.</h2>
+        <div id="all-btn-area" style="width: 100%; display: flex; justify-content: center; margin-bottom: 5px;"></div>
+        <div class="grid-menu" id="subcategory-menu-grid"></div>
+        <div class="status-counter" id="live-word-counter">선택됨: 0단어</div>
+    <button class="start-btn" onclick="launchGameAfterSelection()">게임 시작</button>
   </div>
 
 <div class="header-container" id="game-header">
@@ -701,9 +875,25 @@ justify-content: center;
   <div id="center-feedback" class="center-feedback"></div>
 
   <script>
-    const ALL_WORDS = ["good", "great", "morning", "afternoon", "evening", "ant", "apple", "cat", "hat"];
+    /* ==========================================================================
+       [데이터 교체 및 확장] 기획서 3p 샘플 타겟 '물건(Things)' 하위 36단어 전면 세팅
+       ========================================================================== */
+    const CATEGORY_DATA = {
+      "Things": {
+        "School": ["textbook", "pencil", "eraser", "glue stick", "notebook", "ruler", "scissors", "pencil case", "backpack", "crayon", "computer", "board"],
+        "House": ["door", "window", "bed", "chair", "desk", "clock", "robot", "doll", "umbrella", "fan", "lamp", "sofa"],
+        "Clothing": ["cap", "hat", "jacket", "dress", "skirt", "pants", "shoes", "gloves", "glasses", "socks", "shirt", "scarf"]
+      }
+    };
 
-let wordPool = [];
+    // 실제 게임에서 사용될 유동적 최종 단어 풀
+    let ALL_WORDS = []; 
+
+    // 카테고리 단계 추적용 변수
+    let selectedCategoryName = "";
+    let selectedSubcategories = new Set();
+
+    let wordPool = [];
 
     let gridData = [], currentSelection = [], foundWords = new Set(), foundCells = new Map();
     let round = 1, currentWords = [], wordColors = [], rows = 10, cols = 10;
@@ -767,13 +957,114 @@ const MAX_ROUND = 3;
       }
     }
 
-    function clickStart() {
+     function clickStart() {
       document.getElementById("intro-container").style.display = "none";
+      document.getElementById("category-container").style.display = "flex";
+    }
+
+ function selectCategory(category) {
+      selectedCategoryName = category;
+      document.getElementById("category-container").style.display = "none";
+      
+      const allBtnArea = document.getElementById("all-btn-area");
+      const subGrid = document.getElementById("subcategory-menu-grid");
+      
+      // 기존 내용 초기화
+      allBtnArea.innerHTML = "";
+      subGrid.innerHTML = "";
+      selectedSubcategories.clear();
+
+      const subData = CATEGORY_DATA[category];
+      const subKeys = Object.keys(subData);
+
+      // 총 단어 수 계산
+      let totalWordsCount = 0;
+      subKeys.forEach(k => totalWordsCount += subData[k].length);
+
+      // 1. 상단 분리 공간에 '대분류 전체' 와이드 버튼 배치
+      const allBtn = document.createElement("button");
+      allBtn.className = "menu-box-btn full-width";
+      allBtn.id = "btn-all-subcategories";
+      allBtn.innerHTML = `대분류 전체 <span>(All ${category})</span>`;
+      allBtn.onclick = () => toggleAllSubcategories(subKeys);
+      allBtnArea.appendChild(allBtn);
+
+      // 2. 하단 그리드 공간에 개별 소분류 버튼 배치 (기존 스타일 3열 유지)
+      subKeys.forEach(subKey => {
+        const btn = document.createElement("button");
+        btn.className = "menu-box-btn";
+        btn.id = `sub-btn-${subKey}`;
+        btn.innerHTML = `${subKey}<span>(${subData[subKey].length})</span>`;
+        btn.onclick = () => toggleSubcategory(subKey);
+        subGrid.appendChild(btn);
+      });
+
+      document.getElementById("subcategory-container").style.display = "flex";
+      updateLiveWordCount();
+    }
+
+    function toggleSubcategory(subKey) {
+      if (selectedSubcategories.has(subKey)) {
+        selectedSubcategories.delete(subKey);
+        document.getElementById(`sub-btn-${subKey}`).classList.remove("active");
+      } else {
+        selectedSubcategories.add(subKey);
+        document.getElementById(`sub-btn-${subKey}`).classList.add("active");
+      }
+      updateLiveWordCount();
+    }
+
+    function toggleAllSubcategories(allKeys) {
+      const allBtn = document.getElementById("btn-all-subcategories");
+      
+      if (selectedSubcategories.size === allKeys.length) {
+        // 이미 전부 선택된 상태면 일괄 해제
+        selectedSubcategories.clear();
+        allBtn.classList.remove("active");
+        allKeys.forEach(k => document.getElementById(`sub-btn-${k}`).classList.remove("active"));
+      } else {
+        // 그렇지 않다면 일괄 선택 채우기
+        allKeys.forEach(k => {
+          selectedSubcategories.add(k);
+          document.getElementById(`sub-btn-${k}`).classList.add("active");
+        });
+        allBtn.classList.add("active");
+      }
+      updateLiveWordCount();
+    }
+
+    function updateLiveWordCount() {
+      let count = 0;
+      if (selectedCategoryName && selectedSubcategories.size > 0) {
+        selectedSubcategories.forEach(subKey => {
+          count += CATEGORY_DATA[selectedCategoryName][subKey].length;
+        });
+      }
+      document.getElementById("live-word-counter").textContent = `선택됨: ${count}단어`;
+    }
+
+    function launchGameAfterSelection() {
+      if (selectedSubcategories.size === 0) {
+        alert("최소 한 개 이상의 소주제를 선택해 주세요!");
+        return;
+      }
+
+      // 선택한 소분류들의 단어를 단어 풀(ALL_WORDS)로 가동 시작
+      ALL_WORDS = [];
+      selectedSubcategories.forEach(subKey => {
+        ALL_WORDS = ALL_WORDS.concat(CATEGORY_DATA[selectedCategoryName][subKey]);
+      });
+
+      // UI 전환 후 오리지널 게임 실행 구조 그대로 연결
+      document.getElementById("subcategory-container").style.display = "none";
       document.getElementById("game-header").style.display = "flex";
       document.getElementById("game-body").style.display = "flex";
       resetRound();
     }
 
+    /* ==========================================================================
+       [보존] 기존 게임 핵심 코어 엔진 기능적 측면 완벽 유지
+       ========================================================================== */
     function resetRound() {
       closeModal();
       foundWords.clear();
@@ -864,7 +1155,9 @@ function showModal(title, isLastRound = false, type = "clear") {
   const modalButton = document.getElementById("modal-button");
   const modalBody = document.getElementById("modal-body");
   
-  if (document.getElementById("intro-container").style.display === "none") {
+  if (document.getElementById("intro-container").style.display === "none" &&
+      document.getElementById("category-container").style.display === "none" &&
+      document.getElementById("subcategory-container").style.display === "none") {
     document.getElementById("game-header").style.display = "none";
     document.getElementById("game-body").style.display = "none";
   }
@@ -874,13 +1167,13 @@ function showModal(title, isLastRound = false, type = "clear") {
   modalBody.style.display = "none";
   modalBody.innerHTML = "";
   
-  // 1. How to Play (설명창) 모달일 때
   if (type === "help") {
     modalBody.className = "modal-help-text";
     modalBody.innerHTML = `
       <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
       <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
       <b style="color: #2980b9;"> How to Play </b><br>
+      • 원하는 주제를 선택합니다.<br>
       • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
       • <b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.<br>
       <p class="hanging-indent">• <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.<br></p>
@@ -892,14 +1185,12 @@ function showModal(title, isLastRound = false, type = "clear") {
     modalBody.style.display = "block";
     modalButton.textContent = "Close";
     
-    // 닫기 버튼을 누르면 타이머 재개
     modalButton.onclick = function() {
       isHelpOpen = false;
       closeModal();
       startTimer(); 
     };
   } 
-  // 2. Game Over (시간 초과) 모달일 때 (★유지되어야 하는 부분)
   else if (type === "gameover") {
     modalButton.textContent = "Try Again!";
     modalButton.onclick = function() {
@@ -908,7 +1199,6 @@ function showModal(title, isLastRound = false, type = "clear") {
         resetRound();
     };
   } 
-  // 3. Round Clear (라운드 클리어) 모달일 때 (★유지되어야 하는 부분)
   else {
     if (isLastRound) {
       modalButton.textContent = "Play Again!";
@@ -977,7 +1267,6 @@ gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
 for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
             if (gridData[r][c] === null) {
-                // 이미 배치된 단어 알파벳들과 겹치지 않게 무작위 채우기
                 gridData[r][c] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
             }
         }
@@ -1035,14 +1324,12 @@ for (let r = 0; r < rows; r++) {
   if (isHelpOpen) return;
   const last = currentSelection[currentSelection.length - 1];
   
-  // 첫 번째 글자 선택 시
   if (!last) { 
     currentSelection.push({r, c}); 
     renderGrid(); 
     return; 
   }
   
-  // 이미 선택한 글자를 다시 누르면 선택 취소
   if (currentSelection.some(p => p.r === r && p.c === c)) {
     currentSelection = [];
     renderGrid();
@@ -1059,27 +1346,20 @@ for (let r = 0; r < rows; r++) {
     if (dr !== prevDr || dc !== prevDc) isSameDirection = false;
   }
   
-  // 올바른 방향으로 이어서 클릭한 경우
   if (isAdjacent && isSameDirection) {
     currentSelection.push({r, c});
-    
-    // 현재 선택한 문자열 생성
     const selectedStr = currentSelection.map(p => gridData[p.r][p.c]).join("");
-    
-    // 단어장에 이 글자로 '시작하는' 단어가 존재치 않거나, 역순으로 조합되어 매칭이 안 되는 경우 체크
     const hasPotentialMatch = currentWords.some(w => w.toLowerCase().startsWith(selectedStr));
     
     if (hasPotentialMatch) {
-      checkWord(); // 정답인지 체크
+      checkWord();
     } else {
-      // 역순이거나 아예 틀린 조합인 경우 즉시 오답 처리
       playSound('wrong');
       timeLeft -= 10;
       showTimerFeedback("-10초");
       currentSelection = [];
     }
   } else {
-    // 인접하지 않거나 방향이 꺾인 경우 오답 처리
     playSound('wrong');
     timeLeft -= 10;
     showTimerFeedback("-10초");
@@ -1090,8 +1370,6 @@ for (let r = 0; r < rows; r++) {
 
 function checkWord() {
     const selectedStr = currentSelection.map(p => gridData[p.r][p.c]).join("");
-    
-    // 정확히 정방향으로 일치하는 단어가 있는지 확인
     const matchIndex = currentWords.findIndex(w => w.toLowerCase() === selectedStr);
 
     if (matchIndex !== -1) {
@@ -1140,10 +1418,8 @@ function useHint() {
     timeLeft -= 10;
     showTimerFeedback("-10초");
     
-    // 1. 기존 힌트 효과 제거
     document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("hint-active"));
     
-    // 2. 남은 단어들을 모두 순회하며 시작 위치에 힌트 표시
     remainingWords.forEach(word => {
         const pos = wordStartPositions.get(word);
         if (pos) {
@@ -1151,18 +1427,17 @@ function useHint() {
             const cells = document.querySelectorAll(".cell");
             const cellEl = cells[cellIndex];
             
-            // 아직 발견되지 않은 단어의 시작점만 강조
             if (cellEl && !cellEl.classList.contains("found")) {
                 cellEl.classList.add("hint-active");
             }
-        } // 👈 기존에 빠져있던 if문 닫기 괄호 추가
-    }); // 👈 괄호가 꼬여있던 forEach 정상 정렬 및 닫기
+        }
+    });
 
-    // 3. 5초 후 자동 제거
     setTimeout(() => {
         document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("hint-active"));
     }, 5000);
 }
+
 function resizeGame() {
   const wrapper = document.getElementById("game-wrapper");
   const winW = window.innerWidth;
@@ -1171,7 +1446,6 @@ function resizeGame() {
   const designW = 1200;
   const designH = 800;
  
-  // 가로/세로 비율 확인
   const isPortrait = winH > winW;
  
   let scale;
@@ -1191,7 +1465,6 @@ window.addEventListener("load", resizeGame);
 function openHelp() {
   isHelpOpen = true;
   
-  // 설명창이 열릴 때 타이머 일시정지
   if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
