@@ -779,6 +779,56 @@ justify-content: center;
       margin-top: 4px;
     }
 
+    .menu-box-btn[data-tooltip] {
+      position: relative;
+    }
+    .menu-box-btn[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #ffffff;
+      color: #4a5568;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 3px solid #9ed8ff;
+      box-shadow: 0 6px 0 #b8e4ff, 0 10px 18px rgba(0,0,0,0.12);
+      white-space: normal;
+      width: max-content;
+      max-width: 220px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 20;
+    }
+    .menu-box-btn[data-tooltip]::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-style: solid;
+      border-color: #9ed8ff transparent transparent transparent;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .menu-box-btn[data-tooltip]:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .menu-box-btn[data-tooltip]:hover::before {
+      opacity: 1;
+    }
+
     .menu-box-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 0 #b8e4ff, 0 12px 18px rgba(0,0,0,0.08);
@@ -868,18 +918,19 @@ box-sizing: border-box;
 <body>
 <div id="game-wrapper">
 <div id="title-screen">
-  <img src="0.png" alt="Title Background" class="full-title-bg">
-<div class="title-goal-text">
-    퍼즐 속에 숨겨진 영어 단어를 찾아보며 재미있게 어휘력과 집중력을 키워요!
-  </div>
+  <img src="0.PNG" alt="Title Background" class="full-title-bg">
   <div class="title-btn-group">
     <button class="start-btn intro-how-btn" onclick="openHelpFromTitle()">How to Play</button>
-    <button class="start-btn" onclick="clickStartFromTitle()">GAME START</button>
+    <button class="start-btn" onclick="clickStartFromTitle()">Game Start</button>
   </div>
 </div>
   <div id="intro-container" style="display: none;">
     <div class="intro-title">Word Catch! Catch!</div>
-   
+
+    <div class="title-goal-text">
+      학습목표: 퍼즐 속에 숨겨진 영어 단어를 찾아보며 재미있게 어휘력과 집중력을 키워요!
+    </div>
+
     <div class="intro-box blue-box">
       <h3> How to Play </h3>
       <ul>
@@ -891,10 +942,14 @@ box-sizing: border-box;
       </ul>
     </div>
 
-    <button class="start-btn" onclick="clickStart()">GAME START</button>
+    <div class="title-btn-group">
+      <button class="start-btn intro-how-btn" onclick="hideIntroHelpView()">뒤로</button>
+      <button class="start-btn" onclick="clickStart()">Game Start</button>
+    </div>
   </div>
 
   <div id="category-container">
+    <button class="how-to-play-btn" onclick="goBackFromCategory()">뒤로</button>
     <h2 class="selection-heading">원하는 주제를 선택하세요</h2>
     <div class="grid-menu">
       <button class="menu-box-btn disabled">숫자와 색깔<span>Number & Color</span></button>
@@ -910,10 +965,11 @@ box-sizing: border-box;
   </div>
 
 <div id="subcategory-container">
-    <h2 class="selection-heading">소주제를 선택하세요.</h2>
+    <button class="how-to-play-btn" onclick="goBackFromSubcategory()">뒤로</button>
+    <h2 class="selection-heading">주제를 선택하세요.</h2>
         <div id="all-btn-area" style="width: 100%; display: flex; justify-content: center; margin-bottom: 5px;"></div>
         <div class="grid-menu" id="subcategory-menu-grid"></div>
-        <div class="status-counter" id="live-word-counter">선택됨: 0단어</div>
+        <div class="status-counter" id="live-word-counter">0단어 선택됨</div>
     <button class="start-btn" onclick="launchGameAfterSelection()">게임 시작</button>
   </div>
 
@@ -1012,7 +1068,6 @@ function clickStartFromTitle() {
 function openHelpFromTitle() {
   document.getElementById("title-screen").style.display = "none";
   document.getElementById("intro-container").style.display = "flex";
-  showIntroHelpView(); // 인트로 화면 내 How to Play View 표시
 }
 
 // How to Play 설명창에서 Close를 누르면 다시 찐인트로 화면으로 복귀하도록 수정
@@ -1071,6 +1126,16 @@ function hideIntroHelpView() {
       document.getElementById("category-container").style.display = "flex";
     }
 
+    function goBackFromCategory() {
+      document.getElementById("category-container").style.display = "none";
+      document.getElementById("title-screen").style.display = "flex";
+    }
+
+    function goBackFromSubcategory() {
+      document.getElementById("subcategory-container").style.display = "none";
+      document.getElementById("category-container").style.display = "flex";
+    }
+
  function selectCategory(category) {
       selectedCategoryName = category;
       document.getElementById("category-container").style.display = "none";
@@ -1094,7 +1159,7 @@ function hideIntroHelpView() {
       const allBtn = document.createElement("button");
       allBtn.className = "menu-box-btn full-width";
       allBtn.id = "btn-all-subcategories";
-      allBtn.innerHTML = `대분류 전체`;
+      allBtn.innerHTML = `전체 단어 선택하기<span>(${totalWordsCount})</span>`;
       allBtn.onclick = () => toggleAllSubcategories(subKeys);
       allBtnArea.appendChild(allBtn);
 
@@ -1104,6 +1169,7 @@ function hideIntroHelpView() {
         btn.className = "menu-box-btn";
         btn.id = `sub-btn-${subKey}`;
         btn.innerHTML = `${subKey}<span>(${subData[subKey].length})</span>`;
+        btn.setAttribute("data-tooltip", subData[subKey].join(", "));
         btn.onclick = () => toggleSubcategory(subKey);
         subGrid.appendChild(btn);
       });
@@ -1149,7 +1215,7 @@ function hideIntroHelpView() {
           count += CATEGORY_DATA[selectedCategoryName][subKey].length;
         });
       }
-      document.getElementById("live-word-counter").textContent = `선택됨: ${count}단어`;
+      document.getElementById("live-word-counter").textContent = `${count}단어 선택됨`;
     }
 
     function launchGameAfterSelection() {
