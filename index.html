@@ -102,18 +102,10 @@ box-sizing: border-box;
 }
 
     .intro-title {
-      padding: 25px 60px;
-      background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 25%, #fbc2eb 50%, #a1c4fd 75%, #c2e9fb 100%);
-      background-size: 200% auto;
-      animation: gradientMove 3s linear infinite;
-      color: white;
+      color: #1a2b4a;
       font-size: 3.5rem;
       font-weight: 900;
-      border-radius: 75px;
-      box-shadow: 0 10px 0 #e08588, 0 19px 31px rgba(0, 0, 0, 0.15);
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
       letter-spacing: 1.25px;
-      border: 5px solid white;
     }
 
 .intro-box {
@@ -744,6 +736,22 @@ justify-content: center;
       top: 24px;
       left: 24px;
       z-index: 5;
+      width: auto;
+      padding: 10px 22px;
+      background: linear-gradient(180deg, #fefeff 0%, #eef8ff 100%);
+      border: 3px solid #9ed8ff;
+      border-radius: 999px;
+      color: #4a5568;
+      font-weight: 900;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #b8e4ff, 0 6px 10px rgba(0,0,0,0.05);
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+    }
+    .selection-back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #b8e4ff, 0 8px 12px rgba(0,0,0,0.08);
     }
 
     .selection-heading {
@@ -951,13 +959,12 @@ box-sizing: border-box;
     </div>
 
     <div class="title-btn-group">
-      <button class="start-btn intro-how-btn" onclick="hideIntroHelpView()">뒤로</button>
-      <button class="start-btn" onclick="clickStart()">Game Start</button>
+      <button class="start-btn" onclick="hideIntroHelpView()">닫기</button>
     </div>
   </div>
 
   <div id="category-container">
-    <button class="how-to-play-btn selection-back-btn" onclick="goBackFromCategory()">뒤로</button>
+    <button class="selection-back-btn" onclick="goBackFromCategory()">뒤로</button>
     <h2 class="selection-heading">원하는 주제를 선택하세요</h2>
     <div class="grid-menu">
       <button class="menu-box-btn disabled">숫자와 색깔<span>Number & Color</span></button>
@@ -973,7 +980,7 @@ box-sizing: border-box;
   </div>
 
 <div id="subcategory-container">
-    <button class="how-to-play-btn selection-back-btn" onclick="goBackFromSubcategory()">뒤로</button>
+    <button class="selection-back-btn" onclick="goBackFromSubcategory()">뒤로</button>
     <h2 class="selection-heading">주제를 선택하세요.</h2>
         <div id="all-btn-area" style="width: 100%; display: flex; justify-content: center; margin-bottom: 5px;"></div>
         <div class="grid-menu" id="subcategory-menu-grid"></div>
@@ -1127,11 +1134,6 @@ function hideIntroHelpView() {
         osc.start(audioCtx.currentTime);
         osc.stop(audioCtx.currentTime + 0.05);
       }
-    }
-
-     function clickStart() {
-      document.getElementById("intro-container").style.display = "none";
-      document.getElementById("category-container").style.display = "flex";
     }
 
     function goBackFromCategory() {
