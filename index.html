@@ -526,7 +526,7 @@ align-items: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* 정확히 자신의 절반만큼 끌어올려 정중앙 배치 */
- 
+
   /* 2. 크기 및 비율 유지 (wrapper가 축소되어도 비율 유지) */
   width: 90%;       /* 부모 wrapper 너비의 80% 차지 */
   max-width: 600px; /* 너무 커지는 것 방지 */
@@ -538,12 +538,16 @@ overflow-y: auto;
   border-radius: 40px;
   border: 6px solid #ffffff;
   box-shadow: 0 15px 35px rgba(0,0,0,0.08), 0 5px 0 #cfe9ff; /* 인트로식 하단 블록 그림자 */
- 
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 25px;
+}
+
+.modal-content.modal-wide {
+  max-width: 900px;
 }
 
     .modal-content h3 { color: #ff7043; font-size: 2.8rem; margin: 0 0 15px; font-weight: 900; }
@@ -720,8 +724,8 @@ justify-content: center;
       width: 95% !important;
       max-width: 1200px;
       height: auto;
-      margin: auto;    
-      padding: 40px;    
+      margin: auto;
+      padding: 40px;
       background: radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%), radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%), rgba(255,255,255,0.85);
       backdrop-filter: blur(10px);
       border-radius: 40px;
@@ -731,7 +735,15 @@ justify-content: center;
       flex-direction: column;
       align-items: center;
       gap: 30px;
-      box-sizing: border-box; 
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .selection-back-btn {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 5;
     }
 
     .selection-heading {
@@ -918,20 +930,17 @@ box-sizing: border-box;
 <body>
 <div id="game-wrapper">
 <div id="title-screen">
-  <img src="0.PNG" alt="Title Background" class="full-title-bg">
+  <img src="0.png" alt="Title Background" class="full-title-bg">
   <div class="title-btn-group">
     <button class="start-btn intro-how-btn" onclick="openHelpFromTitle()">How to Play</button>
     <button class="start-btn" onclick="clickStartFromTitle()">Game Start</button>
   </div>
 </div>
   <div id="intro-container" style="display: none;">
-    <div class="intro-box blue-box">
-      <h3> 학습목표 </h3>
-      <p>퍼즐 속에 숨겨진 영어 단어를 찾아보며 재미있게 어휘력과 집중력을 키워요!</p>
-    </div>
+    <div class="intro-title">How to Play</div>
 
     <div class="intro-box blue-box">
-      <h3> How to Play </h3>
+      <h3> 학습목표: 퍼즐 속에 숨겨진 영어 단어를 찾아보며 재미있게 어휘력과 집중력을 키워요! </h3>
       <ul>
         <li><b>원하는 주제를 선택합니다.</b></li>
         <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
@@ -948,7 +957,7 @@ box-sizing: border-box;
   </div>
 
   <div id="category-container">
-    <button class="how-to-play-btn" onclick="goBackFromCategory()">뒤로</button>
+    <button class="how-to-play-btn selection-back-btn" onclick="goBackFromCategory()">뒤로</button>
     <h2 class="selection-heading">원하는 주제를 선택하세요</h2>
     <div class="grid-menu">
       <button class="menu-box-btn disabled">숫자와 색깔<span>Number & Color</span></button>
@@ -964,12 +973,12 @@ box-sizing: border-box;
   </div>
 
 <div id="subcategory-container">
-    <button class="how-to-play-btn" onclick="goBackFromSubcategory()">뒤로</button>
+    <button class="how-to-play-btn selection-back-btn" onclick="goBackFromSubcategory()">뒤로</button>
     <h2 class="selection-heading">주제를 선택하세요.</h2>
         <div id="all-btn-area" style="width: 100%; display: flex; justify-content: center; margin-bottom: 5px;"></div>
         <div class="grid-menu" id="subcategory-menu-grid"></div>
         <div class="status-counter" id="live-word-counter">0단어 선택됨</div>
-    <button class="start-btn" onclick="launchGameAfterSelection()">게임 시작</button>
+    <button class="start-btn" onclick="launchGameAfterSelection()">Game Start</button>
   </div>
 
 <div class="header-container" id="game-header">
@@ -1338,9 +1347,11 @@ function showModal(title, isLastRound = false, type = "clear") {
 
   document.getElementById("modal-title").textContent = title;
 
+  modalContent.classList.toggle("modal-wide", type === "help");
+
   modalBody.style.display = "none";
   modalBody.innerHTML = "";
-  
+
   if (type === "help") {
     modalBody.className = "modal-help-text";
     modalBody.innerHTML = `
