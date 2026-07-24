@@ -62,13 +62,6 @@ position: relative;
 }
 
 
-.hanging-indent {
-  display: block;        /* 블록 요소로 정의 */
-  padding-left: 11px;    /* 전체 문단을 오른쪽으로 25px 밀기 */
-  text-indent: -11px;    /* 첫 줄만 다시 25px 왼쪽으로 당기기 */
-  line-height: 1.6;
-  margin: 0;             /* 기본 문단 간격 제거 */
-}
 #intro-container {
 width: 95% !important;
   max-width: 1200px;
@@ -539,26 +532,26 @@ overflow-y: auto;
 }
 
 .modal-content.modal-wide {
-  max-width: 900px;
+  max-width: 1020px;
 }
 
     .modal-content h3 { color: #ff7043; font-size: 2.8rem; margin: 0 0 15px; font-weight: 900; }
-   
-    .modal-help-text {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #444;
-      text-align: left;
-      word-break: keep-all;
-      margin-bottom: 25px;
-      background: #fff8f8;
-      padding: 20px;
-      border-radius: 15px;
-      border: 2px dashed #ffcbd1;
-      max-height: 380px;
-      overflow-y: auto;
-    }
 
+    /* How to Play 팝업 전용: 인트로 화면 How to Play와 동일한 배경/제목 색상 */
+    .modal-content.modal-help-style {
+      background:
+        radial-gradient(circle at top left, #ffe0f3 0%, transparent 30%),
+        radial-gradient(circle at top right, #d6f0ff 0%, transparent 30%),
+        rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+    }
+    .modal-content.modal-help-style h3 {
+      color: #1a2b4a;
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 1.25px;
+    }
+   
     .next-btn {
       background: linear-gradient(to bottom, #ff9a9e, #fecfef);
       color: white;
@@ -1350,24 +1343,24 @@ function showModal(title, isLastRound = false, type = "clear") {
   document.getElementById("modal-title").textContent = title;
 
   modalContent.classList.toggle("modal-wide", type === "help");
+  modalContent.classList.toggle("modal-help-style", type === "help");
 
   modalBody.style.display = "none";
   modalBody.innerHTML = "";
 
   if (type === "help") {
-    modalBody.className = "modal-help-text";
+    modalBody.className = "";
     modalBody.innerHTML = `
-      <b style="font-size: 1.2rem; color: #e67e22; display: block; margin-bottom: 8px;">Word Catch! Catch! 게임 방법</b>
-      <hr style="border: 0; height: 1px; background: #ffcbd1; margin-bottom: 12px;">
-      <b style="color: #2980b9;"> How to Play </b><br>
-      • 원하는 주제를 선택합니다.<br>
-      • 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.<br>
-      • <b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.<br>
-      <p class="hanging-indent">• <b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.<br></p>
-      • 성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.<br><br>
-      <b style="color: #d35400;">최종 성공 조건</b><br>
-      <p class="hanging-indent">• 제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.<br></p>
-      • 총 <b>${MAX_ROUND}라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b>
+      <div class="intro-box blue-box" style="width: 100%; box-sizing: border-box; max-height: 380px; overflow-y: auto;">
+        <ul>
+          <li> 총 <b>4분</b>의 시간이 주어지며 게임이 시작되면 시간이 줄어듭니다.</li>
+          <li><b>Word Box</b>에 제시된 단어들을 알파벳 퍼즐 판에서 찾습니다.</li>
+          <li><b>가로, 세로, 대각선 방향</b>으로 숨겨진 단어를 찾아 철자를 순서대로 클릭합니다.</li>
+          <li>성공 시 <b>20초</b> 추가, 오답 및 힌트 사용 시 <b>10초</b>가 줄어듭니다.</li>
+          <li>제한 시간 내에 각 라운드의 모든 단어를 찾아내면 다음 라운드로 진출합니다.</li>
+          <li>총 <b>${MAX_ROUND}라운드</b>까지의 모든 단어를 완벽하게 찾아내면 <b>최종 미션 성공!</b></li>
+        </ul>
+      </div>
     `;
     modalBody.style.display = "block";
     modalButton.textContent = "Close";
